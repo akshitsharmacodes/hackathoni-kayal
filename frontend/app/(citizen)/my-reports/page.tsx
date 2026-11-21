@@ -60,9 +60,9 @@ export default function MyReportsPage() {
           placeholder={t.enterPhone}
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          className="h-14 flex-1 rounded-2xl bg-card px-4 text-lg"
+          className="h-14 flex-1 rounded-lg bg-card px-4 text-lg"
         />
-        <Button type="submit" disabled={busy || phone.replace(/\D/g, "").length < 10} className="h-14 rounded-2xl px-6 text-lg">
+        <Button type="submit" disabled={busy || phone.replace(/\D/g, "").length < 10} className="h-14 rounded-lg px-6 text-lg">
           {t.find}
         </Button>
       </form>
@@ -73,10 +73,10 @@ export default function MyReportsPage() {
         {items?.map((r) => {
           const cat = CATEGORY[r.category];
           return (
-            <li key={r.id} className="rounded-3xl border border-border bg-card p-5">
+            <li key={r.id} className="rounded-xl border border-border bg-card p-5">
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <span className="flex size-11 items-center justify-center rounded-2xl" style={{ backgroundColor: `${cat.color}1A`, color: cat.color }}>
+                  <span className="flex size-11 items-center justify-center rounded-lg" style={{ backgroundColor: `${cat.color}1A`, color: cat.color }}>
                     <cat.icon className="size-5" />
                   </span>
                   <div>

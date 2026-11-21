@@ -21,8 +21,8 @@ export function MicButton({ state, onClick, tone = "green", label, seconds = 0 }
       disabled={state === "busy"}
       aria-label={label}
       className={cn(
-        "relative flex size-44 items-center justify-center rounded-full text-primary-foreground shadow-[0_18px_40px_-18px_rgba(31,77,58,0.55)] transition-all duration-200 active:scale-95 disabled:opacity-90",
-        tone === "green" ? "bg-primary" : "bg-gold text-white",
+        "relative flex size-44 items-center justify-center rounded-full text-primary-foreground shadow-[0_1px_0_rgba(17,24,39,0.06),0_20px_40px_-20px_rgba(14,94,90,0.55)] transition-all duration-200 active:scale-95 disabled:opacity-90",
+        tone === "green" ? "bg-primary" : "bg-foreground text-background",
         recording && "mic-recording bg-destructive",
       )}
     >

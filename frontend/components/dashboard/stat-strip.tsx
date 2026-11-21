@@ -30,7 +30,7 @@ export function StatStrip() {
     <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
       {items.map((s) => (
         <div key={s.label} className="rounded-xl border border-border bg-card px-4 py-3">
-          <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{s.label}</p>
+          <p className="font-mono text-xs text-muted-foreground">{s.label}</p>
           <p className="tabular mt-1 flex items-center gap-2 text-2xl font-semibold tracking-tight">
             {s.color && <span className="size-2 shrink-0 rounded-full" style={{ backgroundColor: s.color }} />}
             <span className={cn(typeof s.value === "string" && "text-base leading-8")}>{s.value}</span>

@@ -4,12 +4,12 @@ export const TAGLINE = "Your voice. Our waters. Together.";
 
 /**
  * Kayal mark: a lamp flame (nilavilakku: care, hope, a voice) above two backwater waves,
- * on deep green. Hand-made SVG so it stays crisp at any size and in dark mode.
+ * on backwater teal. Hand-made SVG so it stays crisp at any size and in dark mode.
  */
 export function LogoMark({ className, title = "Kayal" }: { className?: string; title?: string }) {
   return (
     <svg viewBox="0 0 64 64" className={cn("size-8 shrink-0", className)} role="img" aria-label={title}>
-      <rect width="64" height="64" rx="16" fill="#1F4D3A" />
+      <rect width="64" height="64" rx="16" fill="#0E5E5A" />
       <path d="M32 9c-6.5 9-9.5 14.6-9.5 19.4a9.5 9.5 0 0 0 19 0C41.5 23.6 38.5 18 32 9z" fill="#D9A93F" />
       <path d="M32 19.5c-2.6 4-3.9 6.6-3.9 8.8a3.9 3.9 0 0 0 7.8 0c0-2.2-1.3-4.8-3.9-8.8z" fill="#FBF3DE" />
       <path d="M11 45c5.2-4.2 10.4-4.2 15.6 0s10.4 4.2 15.6 0 10.4-4.2 15.6 0" fill="none" stroke="#FBF3DE" strokeWidth="3.6" strokeLinecap="round" />

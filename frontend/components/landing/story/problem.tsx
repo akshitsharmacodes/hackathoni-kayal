@@ -1,40 +1,32 @@
-import { Droplet, Leaf, MessageSquareOff, Waves } from "lucide-react";
-import { Cite, Reveal, StorySection } from "./primitives";
+import { Cell, Cite, HairGrid, Reveal, StorySection } from "./primitives";
 
 const PROBLEMS = [
   {
-    icon: Leaf,
-    color: "#3F7D3A",
+    color: "#16A34A",
     title: "Water hyacinth chokes the canals",
-    cause:
-      "Since the Thanneermukkom bund (1976) the southern lake stays fresh for most of the year, and the floating weed thrives there.",
+    cause: "Since the Thanneermukkom bund (1976) the southern lake stays fresh most of the year, and the floating weed thrives there.",
     effect: "In September 2026 it tangled propellers and brought boat services around Kumarakom to a standstill.",
     cite: [4, 3],
   },
   {
-    icon: Droplet,
-    color: "#C2410C",
+    color: "#EA580C",
     title: "Plastic, sewage and oil",
-    cause:
-      "Around 700 registered and 750 unregistered houseboats, farm runoff from Kuttanad and untreated settlement waste all reach the same water.",
+    cause: "About 700 registered and 750 unregistered houseboats, farm runoff from Kuttanad and untreated settlement waste reach the same water.",
     effect: "A university study found microplastics in lake sediment at every site it sampled.",
     cite: [4, 5],
   },
   {
-    icon: Waves,
-    color: "#2F5D8A",
+    color: "#2563EB",
     title: "Floods in a land below sea level",
     cause: "Kuttanad sits below sea level, so heavy rain and released dam water have nowhere to go.",
     effect: "In August 2018 nearly 1.5 lakh people, about 80% of Kuttanad, fled their homes within two days.",
     cite: [2, 6],
   },
   {
-    icon: MessageSquareOff,
-    color: "#7A5C8E",
+    color: "#7C3AED",
     title: "The reporting gap",
-    cause:
-      "A fisher who spots a weed mat or an oil slick makes a phone call or a WhatsApp forward, often in Malayalam, Hindi or Tamil, with no exact location.",
-    effect: "Officials can't see where problems cluster, and the citizen rarely hears back. The same problem gets reported again and again.",
+    cause: "A fisher who spots a weed mat or an oil slick makes a call or a WhatsApp forward, often in Malayalam, Hindi or Tamil, with no exact location.",
+    effect: "Officials can't see where problems cluster, and the citizen rarely hears back. The same problem is reported again and again.",
     cite: undefined,
   },
 ];
@@ -43,36 +35,32 @@ export function Problem() {
   return (
     <StorySection
       id="problem"
+      index="02"
       eyebrow="The problem"
-      tinted
-      title={<>What is going wrong, and why</>}
-      intro="These are not one-off events. They come back every season, in the same places, and the information about them is lost in phone calls."
+      title={<>What is going wrong, and why.</>}
+      intro="These problems return every season, in the same places. The information about them is lost in phone calls."
     >
-      <div className="grid gap-4 sm:grid-cols-2">
-        {PROBLEMS.map((p, i) => (
-          <Reveal key={p.title} delay={(i % 2) * 0.08} lift className="relative flex flex-col overflow-hidden rounded-3xl border border-border bg-card p-7">
-            <span aria-hidden className="absolute inset-x-0 top-0 h-1" style={{ backgroundColor: p.color }} />
-            <span aria-hidden className="tabular absolute right-6 top-5 text-5xl font-semibold text-foreground/5">0{i + 1}</span>
-            <span className="flex size-11 items-center justify-center rounded-2xl" style={{ backgroundColor: `${p.color}1A`, color: p.color }}>
-              <p.icon className="size-5" />
-            </span>
-            <h3 className="mt-5 text-xl font-semibold tracking-tight">{p.title}</h3>
-            <dl className="mt-4 space-y-3 text-[15px] leading-relaxed">
-              <div>
-                <dt className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Cause</dt>
-                <dd className="mt-1 text-foreground/85">{p.cause}</dd>
-              </div>
-              <div>
-                <dt className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Effect</dt>
-                <dd className="mt-1 text-foreground/85">
+      <Reveal>
+        <HairGrid className="sm:grid-cols-2">
+          {PROBLEMS.map((p) => (
+            <Cell key={p.title}>
+              <h3 className="flex items-center gap-2.5 text-lg font-semibold tracking-tight">
+                <span className="size-2 rounded-full" style={{ backgroundColor: p.color }} aria-hidden />
+                {p.title}
+              </h3>
+              <dl className="mt-5 grid gap-4 text-[15px] leading-relaxed sm:grid-cols-[72px_1fr] sm:gap-x-4 sm:gap-y-3">
+                <dt className="font-mono text-xs text-muted-foreground sm:pt-1">Cause</dt>
+                <dd className="text-foreground/85">{p.cause}</dd>
+                <dt className="font-mono text-xs text-muted-foreground sm:pt-1">Effect</dt>
+                <dd className="text-foreground/85">
                   {p.effect}
                   {p.cite && <Cite n={p.cite} />}
                 </dd>
-              </div>
-            </dl>
-          </Reveal>
-        ))}
-      </div>
+              </dl>
+            </Cell>
+          ))}
+        </HairGrid>
+      </Reveal>
     </StorySection>
   );
 }

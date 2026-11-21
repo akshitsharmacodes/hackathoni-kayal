@@ -5,7 +5,7 @@ import { Reveal, StorySection } from "./primitives";
 
 function Phone({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mx-auto flex h-56 w-36 flex-col items-center justify-center gap-3 rounded-[1.6rem] border-[5px] border-foreground/85 bg-background p-3 shadow-[0_20px_40px_-24px_rgba(31,27,20,0.5)]">
+    <div className="mx-auto flex h-56 w-36 flex-col items-center justify-center gap-3 rounded-[1.4rem] border border-border bg-background p-3 shadow-sm">
       {children}
     </div>
   );
@@ -30,8 +30,8 @@ function MockSpeak() {
 function MockPin() {
   return (
     <Phone>
-      <div className="relative h-24 w-full overflow-hidden rounded-xl bg-[#e9e4d6]">
-        <div className="absolute inset-x-0 top-10 h-5 -rotate-6 bg-[#c9d6d3]" />
+      <div className="relative h-24 w-full overflow-hidden rounded-xl bg-muted">
+        <div className="absolute inset-x-0 top-10 h-5 -rotate-6 bg-accent" />
         <span className="absolute left-1/2 top-1/2 size-14 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/40 bg-primary/10" />
         <MapPin className="absolute left-1/2 top-1/2 size-6 -translate-x-1/2 -translate-y-full fill-primary text-background" />
       </div>
@@ -65,14 +65,14 @@ function MockMap() {
     [45, 22, "#C2410C"], [80, 30, "#3B3A36"], [55, 78, "#8A5A2B"],
   ] as const;
   return (
-    <div className="mx-auto h-56 w-full max-w-[15rem] overflow-hidden rounded-2xl border border-border bg-card p-2 shadow-[0_20px_40px_-24px_rgba(31,27,20,0.4)]">
+    <div className="mx-auto h-56 w-full max-w-[15rem] overflow-hidden rounded-xl border border-border bg-background p-2 shadow-sm">
       <div className="flex gap-1.5 pb-2">
         {["9 open", "5 in progress", "Hotspot: Kainakary"].map((s) => (
           <span key={s} className="rounded-md border border-border px-1.5 py-0.5 text-[9px] text-muted-foreground">{s}</span>
         ))}
       </div>
-      <div className="relative h-[calc(100%-1.75rem)] rounded-xl bg-[#e9e4d6]">
-        <div className="absolute left-[38%] top-0 h-full w-6 rotate-12 bg-[#c9d6d3]" />
+      <div className="relative h-[calc(100%-1.75rem)] rounded-xl bg-muted">
+        <div className="absolute left-[38%] top-0 h-full w-6 rotate-12 bg-accent" />
         {pins.map(([x, y, c], i) => (
           <span key={i} className="absolute size-3 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/70" style={{ left: `${x}%`, top: `${y}%`, backgroundColor: c, opacity: 0.85 }} />
         ))}
@@ -114,22 +114,25 @@ export function How() {
   return (
     <StorySection
       id="how"
+      index="04"
       eyebrow="How Kayal works"
-      title={<>From a voice on the water to a pin on the panchayat map</>}
+      title={<>From a voice on the water to a pin on the panchayat map.</>}
       intro="Built for people who would rather speak than type. One action per screen, every step spoken back."
     >
-      <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
-        {STEPS.map((s, i) => (
-          <Reveal key={s.n} delay={i * 0.08} lift className="flex flex-col gap-5 rounded-3xl border border-border bg-card p-5">
-            {s.mock}
-            <div>
-              <p className="tabular text-xs font-medium text-gold-ink">{s.n}</p>
-              <h3 className="mt-1 text-lg font-semibold leading-snug tracking-tight">{s.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.text}</p>
-            </div>
-          </Reveal>
-        ))}
-      </ol>
+      <Reveal>
+        <ol className="grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-5">
+          {STEPS.map((s) => (
+            <li key={s.n} className="flex flex-col bg-card">
+              <div className="flex h-64 items-center justify-center border-b border-border bg-muted/40 p-4">{s.mock}</div>
+              <div className="p-5">
+                <p className="tabular font-mono text-xs text-muted-foreground">{s.n}</p>
+                <h3 className="mt-2 font-semibold leading-snug tracking-tight">{s.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </Reveal>
     </StorySection>
   );
 }

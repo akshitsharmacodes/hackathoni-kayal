@@ -142,8 +142,8 @@ export default function ReportPage() {
           <p className="text-lg leading-relaxed text-muted-foreground">{result.reply_text}</p>
           <p className="font-medium text-primary">{t.thankYou}</p>
         </div>
-        <div className="w-full rounded-3xl border border-border bg-card p-5 text-left">
-          <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{t.nextTitle}</p>
+        <div className="w-full rounded-xl border border-border bg-card p-5 text-left">
+          <p className="font-mono text-xs text-muted-foreground">{t.nextTitle}</p>
           <ol className="mt-3 space-y-2.5">
             {t.nextSteps.map((s, i) => (
               <li key={s} className="flex gap-3 text-[15px] leading-snug">
@@ -156,7 +156,7 @@ export default function ReportPage() {
         <button onClick={() => playBase64Wav(result.reply_audio)} className="flex items-center gap-2 text-primary">
           <Volume2 className="size-5" /> {t.playAgain}
         </button>
-        <Button onClick={reset} className="mt-4 h-14 w-full rounded-2xl text-lg">
+        <Button onClick={reset} className="mt-4 h-14 w-full rounded-lg text-lg">
           {t.done}
         </Button>
       </div>
@@ -169,7 +169,7 @@ export default function ReportPage() {
       <div className="flex flex-1 flex-col gap-5 pt-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
         <h1 className="text-[26px] font-semibold">{t.isThisRight}</h1>
 
-        <div className="overflow-hidden rounded-3xl border border-border bg-card">
+        <div className="overflow-hidden rounded-xl border border-border bg-card">
           {photo && <img src={photo.url} alt="" className="h-44 w-full object-cover" />}
           <div className="space-y-2 p-5">
             <p className="text-xl leading-snug">{draft.summary_local || draft.transcript}</p>
@@ -180,8 +180,8 @@ export default function ReportPage() {
         </div>
 
         <section className="space-y-3">
-          <h2 className="text-sm font-medium uppercase tracking-wider text-muted-foreground">{t.locationTitle}</h2>
-          <div className="relative h-52 overflow-hidden rounded-3xl border border-border">
+          <h2 className="font-mono text-xs text-muted-foreground">{t.locationTitle}</h2>
+          <div className="relative h-52 overflow-hidden rounded-xl border border-border">
             <PinMap pin={pin} accuracy={pin?.source === "gps" ? pin.accuracy : null} onPlace={onPlace} />
           </div>
           <p className={pinOk ? "text-sm text-muted-foreground" : "text-sm font-medium text-gold-ink"}>
@@ -189,14 +189,14 @@ export default function ReportPage() {
             {pin?.source === "gps" && pin.accuracy !== null && <span className="tabular"> · ±{pin.accuracy} m</span>}
           </p>
           {pin && !pinOk && (
-            <Button variant="outline" onClick={() => setManualPin({ lat: pin.lat, lng: pin.lng })} className="h-12 w-full rounded-2xl text-base">
+            <Button variant="outline" onClick={() => setManualPin({ lat: pin.lat, lng: pin.lng })} className="h-12 w-full rounded-lg text-base">
               <LocateFixed className="size-4" /> {t.pinCorrect}
             </Button>
           )}
         </section>
 
         <section className="space-y-3">
-          <h2 className="text-sm font-medium uppercase tracking-wider text-muted-foreground">{t.problemType}</h2>
+          <h2 className="font-mono text-xs text-muted-foreground">{t.problemType}</h2>
           <CategoryChips value={category} onChange={setCategory} labels={t.categories} />
         </section>
 
@@ -210,13 +210,13 @@ export default function ReportPage() {
             placeholder="98470 12345"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className="h-14 rounded-2xl bg-card px-4 text-lg"
+            className="h-14 rounded-lg bg-card px-4 text-lg"
           />
           <p className="text-sm text-muted-foreground">{t.phoneHint}</p>
         </section>
 
         <div className="sticky bottom-0 -mx-5 mt-auto space-y-2 border-t border-border bg-background/95 px-5 pb-4 pt-3 backdrop-blur">
-          <Button onClick={send} disabled={step === "sending" || !pinOk} className="h-14 w-full rounded-2xl text-lg">
+          <Button onClick={send} disabled={step === "sending" || !pinOk} className="h-14 w-full rounded-lg text-lg">
             {step === "sending" ? t.sending : t.send}
           </Button>
           {!pinOk && <p className="text-center text-sm text-muted-foreground">{t.pinNeeded}</p>}
@@ -248,7 +248,7 @@ export default function ReportPage() {
           <div className="absolute -right-4 bottom-1">
             {photo ? (
               <div className="relative">
-                <img src={photo.url} alt={t.photoAdded} className="size-16 rounded-2xl border-4 border-background object-cover shadow-md" />
+                <img src={photo.url} alt={t.photoAdded} className="size-16 rounded-lg border-4 border-background object-cover shadow-md" />
                 <button
                   onClick={() => setPhoto(null)}
                   aria-label="Remove photo"

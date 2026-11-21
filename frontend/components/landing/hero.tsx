@@ -1,80 +1,70 @@
 "use client";
 
+import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
-import { Languages, LocateFixed, ShieldCheck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { TAGLINE } from "@/components/brand/logo";
 import { CtaButtons } from "./cta-buttons";
 import { PhoneDemo } from "./phone-demo";
-import { WaveBackground } from "./wave-background";
 
-const FACTS = [
-  { icon: Languages, text: "Malayalam · हिन्दी · தமிழ் · English" },
-  { icon: LocateFixed, text: "Exact pin, GPS within 30 m" },
-  { icon: ShieldCheck, text: "Status you can check" },
-];
+const META = ["Malayalam · हिन्दी · தமிழ் · English", "Exact pin, GPS ±30 m", "Status you can check"];
 
 export function Hero() {
   const reduce = useReducedMotion();
   const rise = (delay: number) =>
-    reduce ? {} : { initial: { opacity: 0, y: 16 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.6, ease: "easeOut" as const, delay } };
+    reduce ? {} : { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.5, ease: "easeOut" as const, delay } };
 
   return (
-    <section id="top" className="relative isolate overflow-hidden px-6 pt-28 pb-28 sm:pb-36">
-      <WaveBackground />
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-14 lg:grid-cols-[1.1fr_1fr]">
-        <div className="text-center lg:text-left">
-          <motion.p {...rise(0)} className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur">
-            <span className="size-1.5 rounded-full bg-primary" /> Alappuzha · Kuttanad · Kerala
-          </motion.p>
-          <motion.h1 {...rise(0.08)} className="mt-6 text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
-            Speak up for the{" "}
-            <span className="relative whitespace-nowrap text-primary">
-              backwaters
-              <motion.svg
-                viewBox="0 0 300 12"
-                className="absolute -bottom-2 left-0 h-3 w-full text-[color:var(--gold)]"
-                preserveAspectRatio="none"
-                aria-hidden
-              >
-                <motion.path
-                  d="M2 8 C 60 2, 120 12, 180 6 S 270 4, 298 7"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                  initial={reduce ? false : { pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 1.1, delay: 0.5, ease: "easeInOut" }}
-                />
-              </motion.svg>
-            </span>
-            .
+    <section id="top" className="relative isolate overflow-hidden">
+      <div className="bg-grid pointer-events-none absolute inset-0 -z-10" aria-hidden />
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-16 px-6 pt-32 pb-20 lg:grid-cols-[1.15fr_1fr] lg:pt-36 lg:pb-28">
+        <div>
+          <motion.div {...rise(0)}>
+            <Link
+              href="#how"
+              className="group inline-flex h-7 items-center gap-2 rounded-full border border-border bg-card pl-1 pr-3 text-xs text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <span className="rounded-full bg-accent px-2 py-0.5 font-mono text-[10px] text-accent-foreground">NEW</span>
+              Built for Alappuzha · HackaThoni 2026
+              <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+            </Link>
+          </motion.div>
+          <motion.h1
+            {...rise(0.05)}
+            className="mt-6 text-[2.9rem] font-semibold leading-[1.02] tracking-[-0.045em] sm:text-6xl lg:text-[4.4rem]"
+          >
+            Speak up for the <span className="text-primary">backwaters.</span>
           </motion.h1>
-          <motion.p {...rise(0.16)} className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground lg:mx-0">
-            <span lang="ml" className="font-medium text-foreground">കായൽ Kayal</span> lets anyone report plastic, water hyacinth, oil and
-            flooding by voice, with a photo and an exact pin. The panchayat sees it on a live map and acts.
+          <motion.p {...rise(0.1)} className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
+            Report plastic, water hyacinth, oil and flooding by voice, with a photo and an exact pin. The panchayat sees it on a live
+            map, and you can follow what happens next.
           </motion.p>
-          <motion.ul {...rise(0.24)} className="mt-7 flex flex-wrap justify-center gap-2 lg:justify-start">
-            {FACTS.map(({ icon: Icon, text }) => (
-              <li key={text} className="flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-sm text-foreground/80">
-                <Icon className="size-4 text-primary" /> {text}
+          <motion.div {...rise(0.15)}>
+            <CtaButtons className="mt-8" />
+          </motion.div>
+          <motion.ul {...rise(0.2)} className="mt-8 flex flex-col gap-2 font-mono text-xs text-muted-foreground sm:flex-row sm:flex-wrap sm:gap-x-5">
+            {META.map((m, i) => (
+              <li key={m} className="flex items-center gap-5">
+                {i > 0 && <span className="hidden h-3 w-px bg-border sm:block" aria-hidden />}
+                {m}
               </li>
             ))}
           </motion.ul>
-          <motion.div {...rise(0.32)}>
-            <CtaButtons className="mx-auto mt-9 lg:mx-0" />
-          </motion.div>
-          <motion.p {...rise(0.4)} className="mt-6 text-xs text-muted-foreground">
-            Built with Sarvam AI · smallest.ai · Devin · for HackaThoni 2026
-          </motion.p>
         </div>
         <motion.div
-          initial={reduce ? false : { opacity: 0, y: 30, rotate: -2 }}
-          animate={{ opacity: 1, y: 0, rotate: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          className="flex justify-center"
+          initial={reduce ? false : { opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
+          className="flex justify-center lg:justify-end"
         >
           <PhoneDemo />
         </motion.div>
+      </div>
+      <div className="border-t border-border">
+        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-x-8 gap-y-3 px-6 py-5 text-sm text-muted-foreground">
+          <span className="font-medium text-foreground">{TAGLINE}</span>
+          <span className="font-mono text-xs">Built with Sarvam AI · smallest.ai · Devin · TinkerHub</span>
+        </div>
       </div>
     </section>
   );

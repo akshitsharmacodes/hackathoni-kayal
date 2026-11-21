@@ -107,7 +107,7 @@ export function ReportSheet({ id, onClose }: { id: number | null; onClose: () =>
 
               {(r.audio_url || r.transcript) && (
                 <section className="space-y-2 rounded-xl bg-muted/60 p-4">
-                  <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Citizen’s words</p>
+                  <p className="font-mono text-xs text-muted-foreground">Citizen’s words</p>
                   {r.transcript && <p className="text-sm leading-relaxed">“{r.transcript}”</p>}
                   {r.audio_url && <audio controls src={r.audio_url} className="h-9 w-full" />}
                 </section>
@@ -121,7 +121,7 @@ export function ReportSheet({ id, onClose }: { id: number | null; onClose: () =>
 
               {NEXT_STATUSES[r.status].length > 0 && (
                 <section className="space-y-3">
-                  <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Update status</p>
+                  <p className="font-mono text-xs text-muted-foreground">Update status</p>
                   <Textarea value={note} onChange={(e) => setNote(e.target.value)} placeholder="Note (optional), e.g. cleanup boat sent" rows={2} />
                   <div className="flex flex-wrap gap-2">
                     {NEXT_STATUSES[r.status].filter((s) => s !== "duplicate").map((s) => (
@@ -157,7 +157,7 @@ export function ReportSheet({ id, onClose }: { id: number | null; onClose: () =>
               )}
 
               <section className="space-y-3">
-                <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">History</p>
+                <p className="font-mono text-xs text-muted-foreground">History</p>
                 <ol className="relative space-y-4 border-l border-border pl-5">
                   {r.events.map((e) => (
                     <li key={e.id} className="relative">

@@ -23,8 +23,8 @@ export default function Home() {
       <Benefits />
       <LiveNumbers />
       <LanguageMarquee />
-      <Credits />
       <SourcesList />
+      <Credits />
     </main>
   );
 }

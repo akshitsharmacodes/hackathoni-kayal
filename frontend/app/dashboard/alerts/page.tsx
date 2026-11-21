@@ -59,7 +59,7 @@ export default function AlertsPage() {
       <div className="grid gap-6 p-6 xl:grid-cols-[380px_1fr]">
         <form
           onSubmit={(e) => { e.preventDefault(); if (valid) create.mutate(); }}
-          className="h-fit space-y-4 rounded-2xl border border-border bg-card p-5"
+          className="h-fit space-y-4 rounded-lg border border-border bg-card p-5"
         >
           <p className="flex items-center gap-2 font-medium"><BellRing className="size-4" /> New alert</p>
           <div className="space-y-1.5">
@@ -106,8 +106,8 @@ export default function AlertsPage() {
         </form>
 
         <div className="space-y-6">
-          <section className="rounded-2xl border border-border bg-card">
-            <p className="border-b border-border px-5 py-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">Alerts</p>
+          <section className="rounded-lg border border-border bg-card">
+            <p className="border-b border-border px-5 py-3 font-mono text-xs text-muted-foreground">Alerts</p>
             <ul className="divide-y divide-border">
               {alerts.length === 0 && <li className="px-5 py-8 text-center text-sm text-muted-foreground">No alerts yet.</li>}
               {alerts.map((a) => {
@@ -134,9 +134,9 @@ export default function AlertsPage() {
             </ul>
           </section>
 
-          <section className="rounded-2xl border border-border bg-card">
+          <section className="rounded-lg border border-border bg-card">
             <div className="flex items-center justify-between border-b border-border px-5 py-3">
-              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">River gauges</p>
+              <p className="font-mono text-xs text-muted-foreground">River gauges</p>
               <span className="rounded-full border border-dashed border-muted-foreground/50 px-2 py-0.5 text-xs text-muted-foreground">Simulated demo data</span>
             </div>
             <ul className="grid gap-px bg-border sm:grid-cols-2">

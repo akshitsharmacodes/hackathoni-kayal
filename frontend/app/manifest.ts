@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Speak up for the backwaters.",
     start_url: "/report",
     display: "standalone",
-    background_color: "#F8F3E6",
-    theme_color: "#1F4D3A",
+    background_color: "#FAFAF7",
+    theme_color: "#0E5E5A",
     icons: [{ src: "/icon.svg", sizes: "any", type: "image/svg+xml" }],
   };
 }

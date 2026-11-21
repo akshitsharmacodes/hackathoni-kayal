@@ -60,14 +60,14 @@ export default function AskPage() {
     return (
       <div className="flex flex-1 flex-col gap-6 pt-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
         <p className="text-lg text-muted-foreground">“{answer.question}”</p>
-        <div className="rounded-3xl border border-border bg-card p-6">
+        <div className="rounded-xl border border-border bg-card p-6">
           <p className="text-[22px] leading-relaxed">{answer.answer}</p>
         </div>
         <button onClick={() => playBase64Wav(answer.answer_audio)} className="flex items-center gap-2 self-start text-primary">
           <Volume2 className="size-5" /> {t.playAgain}
         </button>
         <div className="mt-auto space-y-3">
-          <Button onClick={() => { setAnswer(null); setText(""); }} className="h-14 w-full rounded-2xl bg-gold text-lg text-white hover:bg-gold/90">
+          <Button onClick={() => { setAnswer(null); setText(""); }} className="h-14 w-full rounded-lg bg-foreground text-lg text-background hover:bg-foreground/90">
             {t.askAgain}
           </Button>
           <Link href="/report" className="block py-2 text-center text-muted-foreground">{t.report}</Link>
@@ -108,9 +108,9 @@ export default function AskPage() {
             onChange={(e) => setText(e.target.value)}
             placeholder={t.askHint}
             rows={2}
-            className="min-h-14 flex-1 rounded-2xl bg-card text-lg"
+            className="min-h-14 flex-1 rounded-lg bg-card text-lg"
           />
-          <Button type="submit" disabled={busy || !text.trim()} className="size-14 rounded-2xl" aria-label={t.ask}>
+          <Button type="submit" disabled={busy || !text.trim()} className="size-14 rounded-lg" aria-label={t.ask}>
             <Send className="size-5" />
           </Button>
         </form>

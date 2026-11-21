@@ -15,9 +15,9 @@ export function InsightCard({
   children: React.ReactNode;
 }) {
   return (
-    <section className={cn("flex min-w-0 flex-col gap-4 rounded-2xl border border-border bg-card p-5", className)}>
+    <section className={cn("flex min-w-0 flex-col gap-4 rounded-lg border border-border bg-card p-5", className)}>
       <div>
-        <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{label}</p>
+        <p className="font-mono text-xs text-muted-foreground">{label}</p>
         <p className="mt-1 flex items-baseline gap-1.5">
           <span className="tabular text-3xl font-semibold tracking-tight">{value}</span>
           {unit && <span className="text-sm text-muted-foreground">{unit}</span>}
@@ -30,7 +30,7 @@ export function InsightCard({
 
 export function InsightCardSkeleton() {
   return (
-    <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-5">
+    <div className="flex flex-col gap-4 rounded-lg border border-border bg-card p-5">
       <div className="space-y-2">
         <Skeleton className="h-3 w-28" />
         <Skeleton className="h-8 w-16" />

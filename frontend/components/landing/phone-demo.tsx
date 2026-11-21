@@ -48,9 +48,9 @@ function ScreenPin() {
   return (
     <div className="flex h-full flex-col gap-3 pt-2">
       <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">Where is the problem?</p>
-      <div className="relative h-40 overflow-hidden rounded-2xl bg-[#e9e4d6]">
-        <div className="absolute -left-4 top-16 h-8 w-[130%] -rotate-12 bg-[#c9d6d3]" />
-        <div className="absolute left-10 top-0 h-full w-5 rotate-6 bg-[#c9d6d3]" />
+      <div className="relative h-40 overflow-hidden rounded-2xl bg-muted">
+        <div className="absolute -left-4 top-16 h-8 w-[130%] -rotate-12 bg-accent" />
+        <div className="absolute left-10 top-0 h-full w-5 rotate-6 bg-accent" />
         <motion.span
           className="absolute left-1/2 top-1/2 size-20 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/40 bg-primary/10"
           initial={{ scale: 2.2, opacity: 0 }}
@@ -86,7 +86,7 @@ function ScreenSort() {
           <motion.span
             key={c}
             initial={false}
-            animate={c === "Hyacinth" ? { backgroundColor: "#3F7D3A", color: "#ffffff", scale: [1, 1.08, 1] } : {}}
+            animate={c === "Hyacinth" ? { backgroundColor: "#16A34A", color: "#ffffff", scale: [1, 1.08, 1] } : {}}
             transition={{ delay: 0.5, duration: 0.5 }}
             className="flex items-center justify-center gap-1 rounded-xl border border-border bg-card py-2 text-[11px]"
           >
@@ -136,12 +136,12 @@ export function PhoneDemo() {
   return (
     <div className="relative mx-auto w-full max-w-[25rem] select-none" aria-label="Animated demo of reporting a problem in Kayal">
       {/* Console card behind the phone */}
-      <div className="absolute -right-2 top-10 hidden w-60 rotate-3 rounded-2xl border border-border bg-card p-3 shadow-[0_30px_60px_-30px_rgba(31,27,20,0.45)] sm:block">
-        <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Panchayat console</p>
-        <div className="relative mt-2 h-36 overflow-hidden rounded-xl bg-[#e9e4d6]">
-          <div className="absolute left-[45%] top-0 h-full w-5 rotate-12 bg-[#c9d6d3]" />
+      <div className="absolute -right-2 top-10 hidden w-60 rounded-xl border border-border bg-card p-3 shadow-[0_24px_48px_-28px_rgba(17,24,39,0.35)] sm:block">
+        <p className="font-mono text-[10px] text-muted-foreground">Panchayat console</p>
+        <div className="relative mt-2 h-36 overflow-hidden rounded-xl bg-muted">
+          <div className="absolute left-[45%] top-0 h-full w-5 rotate-12 bg-accent" />
           {[
-            [20, 30, "#C2410C"], [70, 25, "#2F5D8A"], [80, 70, "#3B3A36"], [35, 75, "#8A5A2B"], [60, 50, "#2F5D8A"],
+            [20, 30, "#EA580C"], [70, 25, "#2563EB"], [80, 70, "#374151"], [35, 75, "#A16207"], [60, 50, "#2563EB"],
           ].map(([x, y, c], i) => (
             <span key={i} className="absolute size-2.5 rounded-full" style={{ left: `${x}%`, top: `${y}%`, backgroundColor: c as string }} />
           ))}
@@ -149,7 +149,7 @@ export function PhoneDemo() {
             {sent && (
               <motion.span
                 key="new-pin"
-                className="absolute left-[42%] top-[42%] size-3.5 rounded-full border-2 border-white bg-[#3F7D3A]"
+                className="absolute left-[42%] top-[42%] size-3.5 rounded-full border-2 border-white bg-[#16A34A]"
                 initial={{ scale: 0 }}
                 animate={{ scale: [0, 1.6, 1] }}
                 exit={{ opacity: 0 }}
@@ -165,7 +165,7 @@ export function PhoneDemo() {
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="mt-2 flex items-center gap-1.5 rounded-lg bg-primary/10 px-2 py-1.5 text-[11px] text-primary"
+              className="mt-2 flex items-center gap-1.5 rounded-md border border-border px-2 py-1.5 text-[11px] text-foreground"
             >
               <span className="size-1.5 rounded-full bg-primary" /> New · Water hyacinth · Kainakary
             </motion.p>
@@ -174,7 +174,7 @@ export function PhoneDemo() {
       </div>
 
       {/* Phone */}
-      <div className="relative w-[15.5rem] rounded-[2.4rem] border-[7px] border-foreground/90 bg-background p-4 shadow-[0_40px_80px_-40px_rgba(31,77,58,0.55)]">
+      <div className="relative w-[15.5rem] rounded-[2.2rem] border border-border bg-card p-4 shadow-[0_1px_0_rgba(17,24,39,0.04),0_30px_60px_-30px_rgba(17,24,39,0.35)]">
         <div className="mx-auto mb-3 h-1.5 w-16 rounded-full bg-foreground/15" />
         <div className="flex items-baseline justify-between">
           <span lang="ml" className="text-sm font-semibold text-primary">കായൽ</span>

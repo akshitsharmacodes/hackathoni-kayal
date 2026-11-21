@@ -1,14 +1,14 @@
 import { CircleHelp, Construction, Droplet, Leaf, Trash2, Waves, type LucideIcon } from "lucide-react";
 import type { Category, Status } from "@/lib/api";
 
-// PRD §10A: muted category colours that sit well on kasavu cream.
+// Category colours: semantic, used on the map, chips and charts (22 Nov redesign).
 export const CATEGORIES: { id: Category; color: string; icon: LucideIcon; en: string }[] = [
-  { id: "plastic", color: "#C2410C", icon: Trash2, en: "Plastic" },
-  { id: "water_hyacinth", color: "#3F7D3A", icon: Leaf, en: "Water hyacinth" },
-  { id: "oil", color: "#3B3A36", icon: Droplet, en: "Oil spill" },
-  { id: "flooding", color: "#2F5D8A", icon: Waves, en: "Flooding" },
-  { id: "broken_jetty", color: "#8A5A2B", icon: Construction, en: "Broken jetty" },
-  { id: "other", color: "#7A5C8E", icon: CircleHelp, en: "Other" },
+  { id: "plastic", color: "#EA580C", icon: Trash2, en: "Plastic" },
+  { id: "water_hyacinth", color: "#16A34A", icon: Leaf, en: "Water hyacinth" },
+  { id: "oil", color: "#374151", icon: Droplet, en: "Oil spill" },
+  { id: "flooding", color: "#2563EB", icon: Waves, en: "Flooding" },
+  { id: "broken_jetty", color: "#A16207", icon: Construction, en: "Broken jetty" },
+  { id: "other", color: "#7C3AED", icon: CircleHelp, en: "Other" },
 ];
 export const CATEGORY = Object.fromEntries(CATEGORIES.map((c) => [c.id, c])) as Record<Category, (typeof CATEGORIES)[number]>;
 

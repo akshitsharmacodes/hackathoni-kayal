@@ -47,12 +47,12 @@ export function SiteNav() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <motion.div style={{ scaleX }} className="h-[3px] origin-left bg-[color:var(--gold)]" aria-hidden />
+      <motion.div style={{ scaleX }} className="h-[2px] origin-left bg-primary" aria-hidden />
       <nav
         aria-label="Page sections"
         className={cn(
           "transition-[background-color,border-color,backdrop-filter] duration-300",
-          scrolled ? "border-b border-border bg-background/85 backdrop-blur-md" : "border-b border-transparent",
+          scrolled ? "border-b border-border bg-background/80 backdrop-blur-md" : "border-b border-transparent",
         )}
       >
         <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-4 px-6">
@@ -66,14 +66,14 @@ export function SiteNav() {
                   href={`#${id}`}
                   aria-current={active === id ? "true" : undefined}
                   className={cn(
-                    "relative z-10 block rounded-full px-3 py-1.5 text-sm transition-colors",
-                    active === id ? "text-primary" : "text-muted-foreground hover:text-foreground",
+                    "relative z-10 block px-3 py-1.5 text-sm transition-colors",
+                    active === id ? "text-foreground" : "text-muted-foreground hover:text-foreground",
                   )}
                 >
                   {label}
                 </a>
                 {active === id && (
-                  <motion.span layoutId="nav-pill" className="absolute inset-0 rounded-full bg-primary/10" transition={{ type: "spring", stiffness: 380, damping: 32 }} />
+                  <motion.span layoutId="nav-pill" className="absolute inset-x-3 -bottom-[11px] h-[2px] rounded-full bg-primary" transition={{ type: "spring", stiffness: 380, damping: 32 }} />
                 )}
               </li>
             ))}
@@ -83,7 +83,7 @@ export function SiteNav() {
             <AppSwitcher />
             <Link
               href="/report"
-              className="group hidden items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 sm:flex"
+              className="group hidden h-9 items-center gap-1.5 rounded-lg bg-primary px-3.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 sm:flex"
             >
               Try Kayal <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
             </Link>

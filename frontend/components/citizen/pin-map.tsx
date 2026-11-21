@@ -11,7 +11,7 @@ import { ALAPPUZHA } from "@/lib/kayal";
 const PIN = L.divIcon({
   className: "",
   html: `<div style="width:30px;height:30px;transform:translate(-15px,-30px)">
-    <svg viewBox="0 0 24 24" width="30" height="30"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z" fill="#1F4D3A" stroke="#FFFDF7" stroke-width="1.5"/><circle cx="12" cy="10" r="2.6" fill="#B8892B"/></svg></div>`,
+    <svg viewBox="0 0 24 24" width="30" height="30"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z" fill="#0E5E5A" stroke="#FFFFFF" stroke-width="1.5"/><circle cx="12" cy="10" r="2.6" fill="#E07A2E"/></svg></div>`,
   iconSize: [0, 0],
 });
 
@@ -58,7 +58,7 @@ export default function PinMap({
         <>
           <Recenter lat={pin.lat} lng={pin.lng} zoom={16} />
           {accuracy !== null && (
-            <Circle center={[pin.lat, pin.lng]} radius={accuracy} pathOptions={{ color: "#1F4D3A", weight: 1, fillOpacity: 0.08 }} />
+            <Circle center={[pin.lat, pin.lng]} radius={accuracy} pathOptions={{ color: "#0E5E5A", weight: 1, fillOpacity: 0.08 }} />
           )}
           <Marker position={[pin.lat, pin.lng]} icon={PIN} draggable eventHandlers={handlers} />
         </>

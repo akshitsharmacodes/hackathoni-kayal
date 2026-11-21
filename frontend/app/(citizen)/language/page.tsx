@@ -14,7 +14,7 @@ export default function LanguagePage() {
   return (
     <div className="flex flex-1 flex-col justify-center gap-8 py-8">
       <div className="space-y-2 text-center">
-        <p className="text-sm uppercase tracking-[0.2em] text-gold">Kayal</p>
+        <p className="font-mono text-xs text-muted-foreground">Kayal</p>
         <h1 className="text-[26px] font-semibold leading-snug">
           ഭാഷ തിരഞ്ഞെടുക്കൂ
           <span className="block text-base font-normal text-muted-foreground">Choose your language</span>
@@ -30,7 +30,7 @@ export default function LanguagePage() {
               router.push("/report");
             }}
             className={cn(
-              "flex h-[72px] items-center justify-between rounded-2xl border bg-card px-6 text-left transition-colors active:bg-muted",
+              "flex h-[72px] items-center justify-between rounded-lg border bg-card px-6 text-left transition-colors active:bg-muted",
               language === l.id ? "border-primary ring-2 ring-primary/15" : "border-border",
             )}
           >

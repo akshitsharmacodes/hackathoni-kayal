@@ -26,7 +26,7 @@ export function CategoryChips({
             aria-checked={active}
             onClick={() => onChange(id)}
             className={cn(
-              "flex min-h-20 flex-col items-center justify-center gap-1.5 rounded-2xl border px-2 py-3 text-center text-[13px] leading-tight transition-colors",
+              "flex min-h-20 flex-col items-center justify-center gap-1.5 rounded-lg border px-2 py-3 text-center text-[13px] leading-tight transition-colors",
               active ? "border-transparent text-white" : "border-border bg-card text-foreground",
             )}
             style={active ? { backgroundColor: color } : undefined}

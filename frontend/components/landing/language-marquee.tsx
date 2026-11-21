@@ -1,5 +1,4 @@
 import { Marquee } from "./marquee";
-import { SectionLabel } from "./steps";
 
 const LANGUAGES = [
   { label: "മലയാളം", lang: "ml" },
@@ -10,14 +9,14 @@ const LANGUAGES = [
 
 export function LanguageMarquee() {
   return (
-    <section className="py-20 sm:py-24">
-      <SectionLabel>Speak in your language</SectionLabel>
-      <div className="relative mt-10">
-        <Marquee pauseOnHover className="[--duration:30s] [--gap:2.5rem]">
+    <section className="border-t border-border py-14">
+      <p className="text-center font-mono text-xs text-muted-foreground">Speak in your language</p>
+      <div className="relative mt-8">
+        <Marquee pauseOnHover className="[--duration:36s] [--gap:3rem]">
           {LANGUAGES.map(({ label, lang }) => (
-            <span key={lang} lang={lang} className="flex items-center gap-10 text-4xl font-medium text-primary sm:text-6xl">
+            <span key={lang} lang={lang} className="flex items-center gap-12 text-3xl font-medium tracking-tight text-foreground/80 sm:text-5xl">
               {label}
-              <span aria-hidden className="text-gold">·</span>
+              <span aria-hidden className="size-1.5 rounded-full bg-border" />
             </span>
           ))}
         </Marquee>

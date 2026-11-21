@@ -11,7 +11,7 @@ import { CATEGORY, STATUS_LABEL } from "@/lib/kayal";
 // softened with a CSS filter (.kayal-tiles in globals.css) to match the earthy palette.
 const TILE_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 const ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-const GAUGE_COLOR = { normal: "#3F7D3A", warning: "#B8892B", danger: "#A33A2B", unknown: "#6B6252" };
+const GAUGE_COLOR = { normal: "#16A34A", warning: "#E07A2E", danger: "#DC2626", unknown: "#6B7280" };
 
 /** Zoom to fit all reports once, the first time data arrives. */
 function FitOnce({ points }: { points: [number, number][] }) {
