@@ -66,9 +66,9 @@ function ScreenReview({ focus }: { focus: "pin" | "type" }) {
     { id: "other", label: "Other" },
   ];
   return (
-    <div className="flex h-full flex-col gap-2.5 pt-1">
+    <div className="flex h-full flex-col gap-2 pt-1">
       <p className="text-[15px] font-semibold tracking-tight">Is this right?</p>
-      <div className="rounded-lg border border-border bg-card p-3">
+      <div className="rounded-lg border border-border bg-card p-2.5">
         <p lang="ml" className="text-[12px] leading-snug">കനാലിൽ പോള നിറഞ്ഞ് വള്ളം പോകാൻ കഴിയുന്നില്ല.</p>
         <p className="mt-1 flex items-center gap-1 text-[10px] text-muted-foreground">
           <MapPin className="size-3" /> Kainakary
@@ -76,25 +76,31 @@ function ScreenReview({ focus }: { focus: "pin" | "type" }) {
       </div>
 
       <p className="font-mono text-[10px] text-muted-foreground">LOCATION</p>
-      <div className="relative h-24 overflow-hidden rounded-lg border border-border bg-muted">
-        <div className="absolute -left-4 top-10 h-6 w-[140%] -rotate-6 bg-accent" aria-hidden />
-        <div className="absolute left-1/3 top-0 h-full w-4 rotate-6 bg-accent/70" aria-hidden />
+      <div className="relative h-20 shrink-0 overflow-hidden rounded-lg border border-border bg-muted">
+        <div className="absolute -left-4 top-7 h-7 w-[140%] -rotate-6 bg-accent" aria-hidden />
+        <div className="absolute left-[30%] top-0 h-full w-5 rotate-6 bg-accent/80" aria-hidden />
+        <div className="absolute left-[72%] top-0 h-full w-3.5 -rotate-3 bg-accent/60" aria-hidden />
+        {/* neighbouring reports for context */}
+        {[[18, 72, "#EA580C"], [80, 30, "#2563EB"], [58, 78, "#A16207"]].map(([x, y, c], i) => (
+          <span key={i} className="absolute size-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/70"
+            style={{ left: `${x}%`, top: `${y}%`, backgroundColor: c as string, opacity: 0.8 }} />
+        ))}
         {focus === "pin" && (
           <>
             <motion.span
-              className="absolute left-1/2 top-1/2 size-14 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/40 bg-primary/10"
+              className="absolute left-[52%] top-1/2 size-12 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/40 bg-primary/10"
               initial={{ scale: 2.1, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             />
-            <motion.div className="absolute left-1/2 top-1/2" initial={{ y: -56, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
+            <motion.div className="absolute left-[52%] top-1/2" initial={{ y: -48, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
               transition={{ type: "spring", stiffness: 280, damping: 17, delay: 0.25 }}>
-              <MapPin className="size-7 -translate-x-1/2 -translate-y-full fill-primary text-background" />
+              <MapPin className="size-6 -translate-x-1/2 -translate-y-full fill-primary text-background" />
             </motion.div>
           </>
         )}
         {focus === "type" && (
-          <MapPin className="absolute left-1/2 top-1/2 size-7 -translate-x-1/2 -translate-y-full fill-primary text-background" />
+          <MapPin className="absolute left-[52%] top-1/2 size-6 -translate-x-1/2 -translate-y-full fill-primary text-background" />
         )}
       </div>
       <p className="flex items-center gap-1 text-[10px] text-muted-foreground">
@@ -108,7 +114,7 @@ function ScreenReview({ focus }: { focus: "pin" | "type" }) {
             key={c.id}
             animate={focus === "type" && c.active ? { backgroundColor: "#16A34A", color: "#ffffff", borderColor: "#16A34A" } : {}}
             transition={{ duration: 0.4, delay: 0.3 }}
-            className="flex items-center justify-center gap-1 rounded-md border border-border bg-card py-1.5 text-[10px]"
+            className="flex items-center justify-center gap-1 rounded-md border border-border bg-card py-1 text-[10px]"
           >
             {c.active && focus === "type" && <Leaf className="size-3" />}
             {c.label}
