@@ -1,25 +1,34 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useRef, useState } from "react";
-import { ArrowRight, Camera, CheckCircle2, MapPin, RotateCcw, Volume2, X } from "lucide-react";
+import { useCallback, useRef, useState } from "react";
+import { ArrowRight, Camera, CheckCircle2, LocateFixed, LocateOff, MapPin, RotateCcw, Volume2, X } from "lucide-react";
 import { toast } from "sonner";
 import { CategoryChips } from "@/components/citizen/category-chips";
 import { MicButton } from "@/components/citizen/mic-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLanguage } from "@/hooks/use-language";
-import { resizePhoto, useLocation } from "@/hooks/use-location";
+import { GOOD_ACCURACY_M, resizePhoto, useLocation } from "@/hooks/use-location";
 import { audioFilename, toSpeechWav, useRecorder } from "@/hooks/use-recorder";
-import { api, type AnalyzeResult, type Category, type SubmitResult } from "@/lib/api";
-import { playBase64Wav } from "@/lib/kayal";
+import { api, type AnalyzeResult, type Category, type Pin, type SubmitResult } from "@/lib/api";
+import { ALAPPUZHA, playBase64Wav } from "@/lib/kayal";
+import { Skeleton } from "@/components/ui/skeleton";
+
+// Leaflet needs `window`, so the mini-map only renders in the browser.
+const PinMap = dynamic(() => import("@/components/citizen/pin-map"), {
+  ssr: false,
+  loading: () => <Skeleton className="size-full rounded-none" />,
+});
 
 type Step = "home" | "analyzing" | "review" | "sending" | "done";
 
 // PRD §7.1: home = giant mic + small camera → review → done.
 export default function ReportPage() {
   const { language, t } = useLanguage();
-  const pos = useLocation();
+  const { best, status: gps } = useLocation();
+  const [manualPin, setManualPin] = useState<{ lat: number; lng: number } | null>(null);
   const recorder = useRecorder();
   const fileInput = useRef<HTMLInputElement>(null);
 
@@ -32,12 +41,23 @@ export default function ReportPage() {
 
   const lang = language ?? "ml-IN";
 
+  // D53-D55: the report's location is either a GPS fix (≤ 30 m to auto-accept) or a pin the citizen placed.
+  // There is never a silent fallback location.
+  const pin: Pin | null = manualPin
+    ? { ...manualPin, accuracy: null, source: "manual" }
+    : best
+      ? { lat: best.lat, lng: best.lng, accuracy: Math.round(best.accuracy), source: "gps" }
+      : null;
+  const pinOk = !!pin && (pin.source === "manual" || (pin.accuracy ?? Infinity) <= GOOD_ACCURACY_M);
+  const onPlace = useCallback((lat: number, lng: number) => setManualPin({ lat, lng }), []);
+
   async function analyze(audio: Blob | null) {
     if (!audio && !photo) return;
     setStep("analyzing");
     const form = new FormData();
-    form.append("lat", String(pos.lat));
-    form.append("lng", String(pos.lng));
+    // Draft only; the confirmed pin is sent with /submit.
+    form.append("lat", String(best?.lat ?? ALAPPUZHA.lat));
+    form.append("lng", String(best?.lng ?? ALAPPUZHA.lng));
     form.append("language", lang);
     if (audio) {
       const wav = await toSpeechWav(audio);
@@ -75,10 +95,10 @@ export default function ReportPage() {
   }
 
   async function send() {
-    if (!draft) return;
+    if (!draft || !pin || !pinOk) return;
     setStep("sending");
     try {
-      const r = await api.submit(draft.draft_id, category, phone.trim() || undefined);
+      const r = await api.submit(draft.draft_id, category, pin, phone.trim() || undefined);
       setResult(r);
       setStep("done");
       playBase64Wav(r.reply_audio);
@@ -94,6 +114,7 @@ export default function ReportPage() {
     setDraft(null);
     setResult(null);
     setPhone("");
+    setManualPin(null);
     setStep("home");
   }
 
@@ -133,6 +154,22 @@ export default function ReportPage() {
         </div>
 
         <section className="space-y-3">
+          <h2 className="text-sm font-medium uppercase tracking-wider text-muted-foreground">{t.locationTitle}</h2>
+          <div className="relative h-52 overflow-hidden rounded-3xl border border-border">
+            <PinMap pin={pin} accuracy={pin?.source === "gps" ? pin.accuracy : null} onPlace={onPlace} />
+          </div>
+          <p className={pinOk ? "text-sm text-muted-foreground" : "text-sm font-medium text-[color:var(--gold)]"}>
+            {!pin ? t.mapHintOff : pinOk ? t.mapHintGood : t.mapHintWeak}
+            {pin?.source === "gps" && pin.accuracy !== null && <span className="tabular"> · ±{pin.accuracy} m</span>}
+          </p>
+          {pin && !pinOk && (
+            <Button variant="outline" onClick={() => setManualPin({ lat: pin.lat, lng: pin.lng })} className="h-12 w-full rounded-2xl text-base">
+              <LocateFixed className="size-4" /> {t.pinCorrect}
+            </Button>
+          )}
+        </section>
+
+        <section className="space-y-3">
           <h2 className="text-sm font-medium uppercase tracking-wider text-muted-foreground">{t.problemType}</h2>
           <CategoryChips value={category} onChange={setCategory} labels={t.categories} />
         </section>
@@ -153,9 +190,10 @@ export default function ReportPage() {
         </section>
 
         <div className="mt-auto space-y-3 pt-2">
-          <Button onClick={send} disabled={step === "sending"} className="h-14 w-full rounded-2xl text-lg">
+          <Button onClick={send} disabled={step === "sending" || !pinOk} className="h-14 w-full rounded-2xl text-lg">
             {step === "sending" ? t.sending : t.send}
           </Button>
+          {!pinOk && <p className="text-center text-sm text-muted-foreground">{t.pinNeeded}</p>}
           <button onClick={reset} className="flex w-full items-center justify-center gap-2 py-2 text-muted-foreground">
             <RotateCcw className="size-4" /> {t.retake}
           </button>
@@ -205,6 +243,17 @@ export default function ReportPage() {
 
         <p className="min-h-14 max-w-xs text-center text-xl leading-snug text-foreground/80">
           {busy ? t.understanding : recorder.state === "recording" ? t.tapToStop : t.tapToSpeak}
+        </p>
+
+        <p className="-mt-4 flex items-center gap-1.5 text-sm text-muted-foreground" aria-live="polite">
+          {gps === "denied" || gps === "unsupported" ? <LocateOff className="size-4" /> : <LocateFixed className={gps === "good" ? "size-4 text-primary" : "size-4 animate-pulse"} />}
+          {gps === "good" && best
+            ? t.gpsReady(Math.round(best.accuracy))
+            : gps === "weak"
+              ? t.gpsWeak
+              : gps === "denied" || gps === "unsupported"
+                ? t.gpsOff
+                : t.gpsLocating}
         </p>
 
         {photo && !busy && recorder.state !== "recording" && (

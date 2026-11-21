@@ -16,7 +16,7 @@ import { playBase64Wav } from "@/lib/kayal";
 // PRD §7.2: same giant-mic screen in gold; one-shot question → spoken answer (D19).
 export default function AskPage() {
   const { language, t } = useLanguage();
-  const pos = useLocation();
+  const { best } = useLocation();
   const recorder = useRecorder();
   const [busy, setBusy] = useState(false);
   const [typing, setTyping] = useState(false);
@@ -26,8 +26,11 @@ export default function AskPage() {
   async function ask(audio: Blob | null, typed?: string) {
     const form = new FormData();
     form.append("language", language ?? "ml-IN");
-    form.append("lat", String(pos.lat));
-    form.append("lng", String(pos.lng));
+    // Ask works without GPS: the backend uses a place named in the question, else Alappuzha.
+    if (best) {
+      form.append("lat", String(best.lat));
+      form.append("lng", String(best.lng));
+    }
     setBusy(true);
     if (audio) {
       const wav = await toSpeechWav(audio);

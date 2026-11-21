@@ -1,6 +1,7 @@
 """/api/reports: analyse → submit → track → manage (PRD §13)."""
 import logging
 import os
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
@@ -10,10 +11,10 @@ from sqlalchemy.orm import Session, selectinload
 
 from app.config import settings
 from app.db import get_db
-from app.models import Category, Place, Report, ReportStatus, StatusEvent
+from app.models import Category, Report, ReportStatus, StatusEvent
 from app.schemas import AnalyzeOut, Language, ReportDetail, ReportOut, StatusIn, SubmitIn, SubmitOut
 from app.services import sarvam, storage, tts
-from app.services.geo import find_place_in_text, local_name, mask_phone, nearest_place, normalize_phone
+from app.services.geo import distance_km, find_place_in_text, local_name, mask_phone, nearest_place, normalize_phone
 from app.services.messages import confirmation
 from app.services.reports import TRANSITIONS, find_possible_duplicate
 
@@ -37,6 +38,17 @@ def upstream(what: str, fn, *args):
     except Exception as e:
         log.exception("%s failed", what)
         raise HTTPException(502, f"{what} is not responding right now. Please try again.") from e
+
+
+def _result(job, what: str):
+    """Wait for a background upload; a failed upload must not lose the report."""
+    if job is None:
+        return None
+    try:
+        return job.result(timeout=60)
+    except Exception:
+        log.exception("%s failed", what)
+        return None
 
 
 def read_upload(f: UploadFile | None) -> tuple[bytes, str, str] | None:
@@ -63,20 +75,25 @@ def analyze(
     if not (audio_in or photo_in or text.strip()):
         raise HTTPException(400, "Send a voice note, a photo or some text.")
 
-    transcript = text.strip()
-    if audio_in:
-        transcript, _ = upstream("Speech recognition", sarvam.transcribe, *audio_in, language)
-    info = upstream("Report analysis", sarvam.classify, transcript, photo_in[0] if photo_in else None, language)
+    # D57 speed: start both Supabase uploads in the background while STT + AI run (saves ~3-4 s).
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        photo_job = pool.submit(storage.upload, settings.photo_bucket, photo_in[0], ".jpg", "image/jpeg") if photo_in else None
+        audio_job = None
+        if audio_in:
+            ext = os.path.splitext(audio_in[1])[1] or ".webm"
+            audio_job = pool.submit(storage.upload, settings.audio_bucket, audio_in[0], ext, audio_in[2])
 
-    photo_url = storage.upload(settings.photo_bucket, photo_in[0], ".jpg", "image/jpeg") if photo_in else None
-    audio_url = None
-    if audio_in:
-        ext = os.path.splitext(audio_in[1])[1] or ".webm"
-        audio_url = storage.upload(settings.audio_bucket, audio_in[0], ext, audio_in[2])
+        transcript = text.strip()
+        if audio_in:
+            transcript, _ = upstream("Speech recognition", sarvam.transcribe, *audio_in, language)
+        info = upstream("Report analysis", sarvam.classify, transcript, photo_in[0] if photo_in else None, language)
 
+        photo_url, audio_url = _result(photo_job, "photo upload"), _result(audio_job, "audio upload")
+
+    # Draft only: the final pin (GPS fix or citizen-placed) arrives with /submit.
     place = find_place_in_text(db, transcript, info["place"]) or nearest_place(db, lat, lng)
     report = Report(
-        status=ReportStatus.draft, lat=lat, lng=lng,
+        status=ReportStatus.draft, lat=lat, lng=lng, location_source="none",
         place_id=place.id if place else None,
         place_name=place.name_en if place else (info["place"] or "Alappuzha"),
         language=language, transcript=transcript,
@@ -110,6 +127,17 @@ def submit(report_id: int, body: SubmitIn, db: Session = Depends(get_db)):
             raise HTTPException(400, "Please enter a 10-digit mobile number")
         r.reporter_phone = phone
 
+    # D53-D56: the pin the citizen confirmed on the review map is the report's real location.
+    r.lat, r.lng = body.lat, body.lng
+    r.location_accuracy_m = round(body.location_accuracy_m, 1) if body.location_accuracy_m is not None else None
+    r.location_source = body.location_source
+    spoken = find_place_in_text(db, r.transcript)
+    near = nearest_place(db, r.lat, r.lng)
+    # Trust a spoken village name only if it is close to the pin; otherwise name the pin's nearest place.
+    place = spoken if spoken and distance_km(spoken.lat, spoken.lng, r.lat, r.lng) <= 3 else near
+    if place:
+        r.place_id, r.place_name = place.id, place.name_en
+
     r.category = body.category
     r.category_corrected = body.category != r.ai_category
     r.status = ReportStatus.open
@@ -118,7 +146,6 @@ def submit(report_id: int, body: SubmitIn, db: Session = Depends(get_db)):
     r.possible_duplicate_of = dup.id if dup else None
     db.commit()
 
-    place = db.get(Place, r.place_id) if r.place_id else None
     text = confirmation(r.language, r.id, r.category.value, local_name(place, r.language, r.place_name))
     try:
         audio = tts.speak(text, r.language)

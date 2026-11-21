@@ -16,8 +16,17 @@ def distance_km(lat1: float, lng1: float, lat2: float, lng2: float) -> float:
     return 2 * 6371 * math.asin(math.sqrt(a))
 
 
+_places_cache: list[Place] | None = None
+
+
 def all_places(db: Session) -> list[Place]:
-    return list(db.scalars(select(Place)))
+    """Places rarely change, so they are loaded once per process (saves ~2 s of Singapore DB round trips)."""
+    global _places_cache
+    if not _places_cache:
+        _places_cache = list(db.scalars(select(Place)))
+        for p in _places_cache:
+            db.expunge(p)  # keep plain loaded objects usable after the session closes
+    return _places_cache
 
 
 def nearest_place(db: Session, lat: float, lng: float) -> Place | None:

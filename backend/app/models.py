@@ -56,6 +56,9 @@ class Report(Base):
 
     lat: Mapped[float] = mapped_column(Float)
     lng: Mapped[float] = mapped_column(Float)
+    # D56: how trustworthy the pin is. source: gps | manual (citizen placed the pin) | none (draft only)
+    location_accuracy_m: Mapped[float | None] = mapped_column(Float)
+    location_source: Mapped[str] = mapped_column(String(10), default="gps")
     place_id: Mapped[int | None] = mapped_column(ForeignKey("places.id"))
     place_name: Mapped[str] = mapped_column(String(80), default="")
 

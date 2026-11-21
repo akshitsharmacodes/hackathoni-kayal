@@ -67,6 +67,13 @@ export function ReportSheet({ id, onClose }: { id: number | null; onClose: () =>
               <SheetTitle className="text-xl">Report #{r.id}</SheetTitle>
               <SheetDescription className="flex flex-wrap items-center gap-x-3 gap-y-1">
                 <span className="flex items-center gap-1"><MapPin className="size-3.5" />{r.place_name}</span>
+                <span className="tabular">
+                  {r.location_source === "manual"
+                    ? "Pin placed by citizen"
+                    : r.location_accuracy_m
+                      ? `GPS ±${Math.round(r.location_accuracy_m)} m`
+                      : "GPS"}
+                </span>
                 <span>{timeAgo(r.created_at)}</span>
                 <span>Severity {r.severity}/5</span>
                 <StatusBadge status={r.status} />

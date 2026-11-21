@@ -38,6 +38,16 @@ type Strings = {
   error: string;
   micDenied: string;
   retake: string;
+  gpsLocating: string;
+  gpsReady: (m: number) => string;
+  gpsWeak: string;
+  gpsOff: string;
+  locationTitle: string;
+  mapHintGood: string;
+  mapHintWeak: string;
+  mapHintOff: string;
+  pinCorrect: string;
+  pinNeeded: string;
   categories: Record<Category, string>;
   statuses: Record<Status, string>;
 };
@@ -73,6 +83,16 @@ export const STRINGS: Record<Language, Strings> = {
     error: "എന്തോ പിശക് സംഭവിച്ചു. വീണ്ടും ശ്രമിക്കൂ.",
     micDenied: "മൈക്ക് അനുമതി നൽകൂ.",
     retake: "വീണ്ടും പറയൂ",
+    gpsLocating: "സ്ഥലം കണ്ടെത്തുന്നു…",
+    gpsReady: (m) => `സ്ഥലം കിട്ടി (±${m} മീ)`,
+    gpsWeak: "സ്ഥലം കൃത്യമല്ല, മാപ്പിൽ ശരിയാക്കാം",
+    gpsOff: "ലൊക്കേഷൻ ഓഫാണ്. ഓൺ ചെയ്യൂ, അല്ലെങ്കിൽ മാപ്പിൽ സ്ഥലം തൊടൂ",
+    locationTitle: "പ്രശ്നം എവിടെയാണ്?",
+    mapHintGood: "പിൻ ശരിയല്ലെങ്കിൽ വലിച്ചു നീക്കൂ",
+    mapHintWeak: "പിൻ കൃത്യ സ്ഥലത്തേക്ക് നീക്കൂ, അല്ലെങ്കിൽ ‘ശരിയാണ്’ അമർത്തൂ",
+    mapHintOff: "ലൊക്കേഷൻ ഓൺ ചെയ്യൂ, അല്ലെങ്കിൽ മാപ്പിൽ കൃത്യ സ്ഥലം തൊടൂ",
+    pinCorrect: "സ്ഥലം ശരിയാണ്",
+    pinNeeded: "അയയ്ക്കാൻ കൃത്യ സ്ഥലം വേണം",
     categories: { plastic: "പ്ലാസ്റ്റിക്", water_hyacinth: "പോള", oil: "എണ്ണ", flooding: "വെള്ളക്കെട്ട്", broken_jetty: "ജെട്ടി തകർച്ച", other: "മറ്റുള്ളവ" },
     statuses: { draft: "കരട്", open: "ലഭിച്ചു", in_progress: "നടപടിയിൽ", resolved: "പരിഹരിച്ചു", rejected: "നിരസിച്ചു", duplicate: "ആവർത്തനം" },
   },
@@ -106,6 +126,16 @@ export const STRINGS: Record<Language, Strings> = {
     error: "कुछ गड़बड़ हुई। फिर कोशिश करें।",
     micDenied: "माइक की अनुमति दें।",
     retake: "फिर बोलें",
+    gpsLocating: "आपकी जगह ढूँढ रहे हैं…",
+    gpsReady: (m) => `जगह मिल गई (±${m} मी)`,
+    gpsWeak: "जगह सटीक नहीं, नक्शे पर ठीक करें",
+    gpsOff: "लोकेशन बंद है। चालू करें या नक्शे पर जगह छुएँ",
+    locationTitle: "समस्या कहाँ है?",
+    mapHintGood: "पिन गलत हो तो खींचकर सही करें",
+    mapHintWeak: "पिन को सही जगह पर खिसकाएँ या ‘जगह सही है’ दबाएँ",
+    mapHintOff: "लोकेशन चालू करें या नक्शे पर सही जगह छुएँ",
+    pinCorrect: "जगह सही है",
+    pinNeeded: "भेजने के लिए सही जगह चाहिए",
     categories: { plastic: "प्लास्टिक", water_hyacinth: "जलकुंभी", oil: "तेल", flooding: "जलभराव", broken_jetty: "टूटी जेट्टी", other: "अन्य" },
     statuses: { draft: "ड्राफ़्ट", open: "मिली", in_progress: "काम जारी", resolved: "हल हुई", rejected: "अस्वीकार", duplicate: "दोहराई गई" },
   },
@@ -139,6 +169,16 @@ export const STRINGS: Record<Language, Strings> = {
     error: "ஏதோ தவறு. மீண்டும் முயற்சிக்கவும்.",
     micDenied: "மைக் அனுமதி தேவை.",
     retake: "மீண்டும் பேசவும்",
+    gpsLocating: "இடத்தைக் கண்டறிகிறோம்…",
+    gpsReady: (m) => `இடம் கிடைத்தது (±${m} மீ)`,
+    gpsWeak: "இடம் துல்லியமில்லை, வரைபடத்தில் சரிசெய்யுங்கள்",
+    gpsOff: "இருப்பிடம் அணைந்துள்ளது. இயக்கவும் அல்லது வரைபடத்தில் தொடவும்",
+    locationTitle: "பிரச்சனை எங்கே?",
+    mapHintGood: "பின் தவறாக இருந்தால் இழுத்து நகர்த்துங்கள்",
+    mapHintWeak: "பின்னை சரியான இடத்துக்கு நகர்த்துங்கள் அல்லது ‘இடம் சரி’ அழுத்துங்கள்",
+    mapHintOff: "இருப்பிடத்தை இயக்கவும் அல்லது வரைபடத்தில் சரியான இடத்தைத் தொடவும்",
+    pinCorrect: "இடம் சரி",
+    pinNeeded: "அனுப்ப சரியான இடம் தேவை",
     categories: { plastic: "பிளாஸ்டிக்", water_hyacinth: "ஆகாயத் தாமரை", oil: "எண்ணெய்", flooding: "வெள்ளம்", broken_jetty: "உடைந்த துறை", other: "மற்றவை" },
     statuses: { draft: "வரைவு", open: "பெறப்பட்டது", in_progress: "நடவடிக்கையில்", resolved: "தீர்ந்தது", rejected: "நிராகரிப்பு", duplicate: "நகல்" },
   },
@@ -172,6 +212,16 @@ export const STRINGS: Record<Language, Strings> = {
     error: "Something went wrong. Please try again.",
     micDenied: "Please allow the microphone.",
     retake: "Speak again",
+    gpsLocating: "Finding your location…",
+    gpsReady: (m) => `Location ready (±${m} m)`,
+    gpsWeak: "Location is rough, you can fix it on the map",
+    gpsOff: "Location is off. Turn it on, or tap the spot on the map",
+    locationTitle: "Where is the problem?",
+    mapHintGood: "Drag the pin if it is not exact",
+    mapHintWeak: "Drag the pin to the exact spot, or tap ‘Location is correct’",
+    mapHintOff: "Turn on location, or tap the exact spot on the map",
+    pinCorrect: "Location is correct",
+    pinNeeded: "An exact location is needed to send",
     categories: { plastic: "Plastic", water_hyacinth: "Water hyacinth", oil: "Oil", flooding: "Flooding", broken_jetty: "Broken jetty", other: "Other" },
     statuses: { draft: "Draft", open: "Received", in_progress: "In progress", resolved: "Resolved", rejected: "Rejected", duplicate: "Duplicate" },
   },

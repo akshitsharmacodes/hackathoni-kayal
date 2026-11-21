@@ -467,4 +467,16 @@ OTP verification, official login/roles, offline queue, WhatsApp/IVR channel (sma
 | D51 | Category chips | **Lucide icons + label** |
 | D52 | UI copy | **Claude drafts all strings in 4 languages; you or a local checks the Malayalam** |
 
-No open questions remain. **The PRD is ready for final approval before implementation.**
+### Location accuracy and speed (decided 22 Nov, 02:00)
+
+| # | Question | Decision |
+|---|---|---|
+| D53 | No good GPS fix | **Never save a fake location.** Ask the user to turn location on; **Send stays locked** until there is a GPS fix ≤ 30 m or a pin the citizen placed |
+| D54 | Auto-accept accuracy | **≤ 30 m**, from continuous GPS listening (`watchPosition`, best fix kept) |
+| D55 | Review mini-map | **Always shown, pin draggable / tap to place**; "Location is correct" button for a rough fix |
+| D56 | Store accuracy | **`location_accuracy_m` + `location_source` (gps / manual)** on reports; dashboard shows the accuracy circle and the source |
+| D57 | Speed | **Quick wins applied:** Supabase uploads run in parallel with STT + AI, places cached in memory, GPS starts on page load (analyze ≈ 10 s → ≈ 4 s measured) |
+| D58 | Streaming STT | **Keep record-then-upload** (D23) |
+| D59 | Hosting | **Keep laptop + tunnel for the demo**; cloud deployment is post-hackathon work |
+
+No open questions remain.

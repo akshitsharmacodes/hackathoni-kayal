@@ -31,6 +31,8 @@ class ReportOut(ORM):
     status: ReportStatus
     lat: float
     lng: float
+    location_accuracy_m: float | None
+    location_source: str
     place_name: str
     language: str
     transcript: str
@@ -64,9 +66,17 @@ class AnalyzeOut(BaseModel):
     photo_url: str | None
 
 
+LocationSource = Literal["gps", "manual"]
+
+
 class SubmitIn(BaseModel):
     category: Category
     phone: str | None = None
+    # D53/D55: the final pin from the review mini-map (GPS fix ≤ 30 m or a pin the citizen placed).
+    lat: float = Field(ge=-90, le=90)
+    lng: float = Field(ge=-180, le=180)
+    location_accuracy_m: float | None = Field(default=None, ge=0)
+    location_source: LocationSource
 
 
 class SubmitOut(BaseModel):

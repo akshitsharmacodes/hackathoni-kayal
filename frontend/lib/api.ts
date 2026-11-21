@@ -19,6 +19,8 @@ export interface Report {
   status: Status;
   lat: number;
   lng: number;
+  location_accuracy_m: number | null;
+  location_source: "gps" | "manual" | "none";
   place_name: string;
   language: Language;
   transcript: string;
@@ -118,6 +120,14 @@ export interface Stats {
   daily: ({ date: string; count: number } & Record<Category, number>)[];
 }
 
+/** The confirmed report location: a GPS fix (with accuracy) or a pin the citizen placed. */
+export interface Pin {
+  lat: number;
+  lng: number;
+  accuracy: number | null;
+  source: "gps" | "manual";
+}
+
 export class ApiError extends Error {
   constructor(public status: number, message: string) {
     super(message);
@@ -139,8 +149,18 @@ const json = (method: string, data: unknown): RequestInit => ({
 
 export const api = {
   analyze: (form: FormData) => request<AnalyzeResult>("/reports/analyze", { method: "POST", body: form }),
-  submit: (id: number, category: Category, phone?: string) =>
-    request<SubmitResult>(`/reports/${id}/submit`, json("POST", { category, phone: phone || null })),
+  submit: (id: number, category: Category, pin: Pin, phone?: string) =>
+    request<SubmitResult>(
+      `/reports/${id}/submit`,
+      json("POST", {
+        category,
+        phone: phone || null,
+        lat: pin.lat,
+        lng: pin.lng,
+        location_accuracy_m: pin.source === "gps" ? pin.accuracy : null,
+        location_source: pin.source,
+      }),
+    ),
   ask: (form: FormData) => request<AskResult>("/ask", { method: "POST", body: form }),
   myReports: (phone: string) => request<ReportDetail[]>(`/reports/mine?phone=${encodeURIComponent(phone)}`),
 

@@ -3,7 +3,7 @@
 import "leaflet/dist/leaflet.css";
 import { useTheme } from "next-themes";
 import { useEffect, useRef } from "react";
-import { CircleMarker, MapContainer, TileLayer, Tooltip, useMap } from "react-leaflet";
+import { Circle, CircleMarker, MapContainer, TileLayer, Tooltip, useMap } from "react-leaflet";
 import type { Gauge, Report } from "@/lib/api";
 import { CATEGORY, STATUS_LABEL } from "@/lib/kayal";
 
@@ -59,6 +59,18 @@ export default function KayalMap({
           </Tooltip>
         </CircleMarker>
       ))}
+
+      {/* D56: show how precise the selected report's location is */}
+      {reports
+        .filter((r) => r.id === selectedId && r.location_accuracy_m)
+        .map((r) => (
+          <Circle
+            key={`acc${r.id}`}
+            center={[r.lat, r.lng]}
+            radius={r.location_accuracy_m!}
+            pathOptions={{ color: CATEGORY[r.category].color, weight: 1, dashArray: "4 4", fillOpacity: 0.08 }}
+          />
+        ))}
 
       {reports.map((r) => {
         const color = CATEGORY[r.category].color;

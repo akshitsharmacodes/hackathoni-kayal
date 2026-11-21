@@ -1,19 +1,48 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ALAPPUZHA } from "@/lib/kayal";
 
-/** GPS captured silently on load; falls back to Alappuzha town centre. */
+/** D54: a fix is good enough to use automatically when accuracy is ≤ 30 m. */
+export const GOOD_ACCURACY_M = 30;
+
+export type Fix = { lat: number; lng: number; accuracy: number };
+export type GpsStatus = "locating" | "good" | "weak" | "denied" | "unsupported";
+
+/**
+ * Keeps listening to GPS while the page is open (watchPosition) and keeps the most accurate fix.
+ * Phones usually give a rough Wi-Fi/cell fix first (50–500 m) and a precise satellite fix seconds later.
+ * Never invents a location: `best` stays null until the phone reports one (D53).
+ */
 export function useLocation() {
-  const [pos, setPos] = useState<{ lat: number; lng: number; precise: boolean }>({ ...ALAPPUZHA, precise: false });
+  const [best, setBest] = useState<Fix | null>(null);
+  const [status, setStatus] = useState<GpsStatus>("locating");
+
   useEffect(() => {
-    navigator.geolocation?.getCurrentPosition(
-      (p) => setPos({ lat: p.coords.latitude, lng: p.coords.longitude, precise: true }),
-      () => {},
-      { enableHighAccuracy: true, timeout: 10_000, maximumAge: 60_000 },
+    if (!("geolocation" in navigator)) {
+      setStatus("unsupported");
+      return;
+    }
+    let stopped = false;
+    const id = navigator.geolocation.watchPosition(
+      (p) => {
+        if (stopped) return;
+        const fix = { lat: p.coords.latitude, lng: p.coords.longitude, accuracy: p.coords.accuracy };
+        setBest((prev) => (!prev || fix.accuracy <= prev.accuracy ? fix : prev));
+        setStatus((s) => (fix.accuracy <= GOOD_ACCURACY_M ? "good" : s === "good" ? "good" : "weak"));
+      },
+      (err) => {
+        if (stopped) return;
+        setStatus((s) => (err.code === err.PERMISSION_DENIED ? "denied" : s === "locating" ? "weak" : s));
+      },
+      { enableHighAccuracy: true, maximumAge: 0, timeout: 20_000 },
     );
+    return () => {
+      stopped = true;
+      navigator.geolocation.clearWatch(id);
+    };
   }, []);
-  return pos;
+
+  return { best, status };
 }
 
 /** Shrink a camera photo to ≤ 1280 px JPEG before upload (NFR-3). */

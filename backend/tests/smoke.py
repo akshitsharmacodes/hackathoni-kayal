@@ -20,7 +20,9 @@ show("health", c.get(f"{B}/health"))
 with open("tests/fixtures/sample_ml.wav", "rb") as f:
     a = show("analyze", c.post(f"{B}/reports/analyze", data={"lat": 9.4872, "lng": 76.3912, "language": "ml-IN"},
                                files={"audio": ("voice.wav", f, "audio/wav")}))
-s = show("submit", c.post(f"{B}/reports/{a['draft_id']}/submit", json={"category": "water_hyacinth", "phone": "98470 12345"}),
+s = show("submit", c.post(f"{B}/reports/{a['draft_id']}/submit", json={"category": "water_hyacinth", "phone": "98470 12345",
+                                                                  "lat": 9.4874, "lng": 76.3915, "location_accuracy_m": 12.4,
+                                                                  "location_source": "gps"}),
          ["possible_duplicate_of", "reply_text"])
 show("mine", c.get(f"{B}/reports/mine", params={"phone": "9847012345"}))
 show("status->in_progress", c.patch(f"{B}/reports/{a['draft_id']}/status", json={"status": "in_progress", "note": "Boat sent"}), ["status"])
