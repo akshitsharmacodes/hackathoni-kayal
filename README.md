@@ -4,9 +4,10 @@
 
 Multilingual voice + photo reporting for the Alappuzha backwaters — citizens speak a problem, the panchayat sees it on a live map. Built solo at **HackaThoni 2026**.
 
-**Live demo:** https://charter-market-lawyer-manually.trycloudflare.com/
+**Live demo:** https://kayal.akshitsharma.dev — citizen app at `/report`, panchayat console at `/dashboard`
 **Source:** https://github.com/akshitsharmacodes/hackathoni-kayal
 **Spec:** [docs/PRD.md](docs/PRD.md) · **Devin tasks:** [docs/devin-tickets.md](docs/devin-tickets.md)
+**Deployed:** Vercel (frontend) → Render (API) → Supabase (Postgres + Storage)
 
 ---
 
@@ -133,17 +134,23 @@ erDiagram
 Citizen phone (mic, camera, GPS)
         │  voice note + photo + pin
         ▼
-Next.js 16 app ──────────────► FastAPI (/api proxy)
-  React 19 · Tailwind           Sarvam AI: STT + classification + QA
-  shadcn/ui · TanStack Query    smallest.ai: TTS replies
-  Leaflet / OpenStreetMap       SQLAlchemy + Alembic
-        │                            │
-        └────────── Supabase Postgres + Storage (photos/audio)
+Next.js 16 app on Vercel ──────────► FastAPI on Render (/api proxy)
+  React 19 · Tailwind                  Sarvam AI: STT + classification + QA
+  shadcn/ui · TanStack Query           smallest.ai: TTS replies
+  Leaflet / OpenStreetMap              SQLAlchemy + Alembic
+        │                                   │
+        └────────────── Supabase Postgres + Storage (photos/audio)
 ```
 
 ## Design
 
 Linear/Vercel-style precision rebuilt for civic use: hairline grids, Geist + Geist Mono, off-white `#FAFAF7`, backwater green `#1E5B3A` — colour carries meaning only (green = action, monsoon orange = alerts/"open", category colours on the map). Light and dark themes throughout, mobile-first.
+
+## Deployment
+
+- **Frontend** — Vercel, `frontend/` as project root, `BACKEND_URL` pointing at the API
+- **Backend** — Render web service defined in [`render.yaml`](render.yaml): `uv sync` build, `alembic upgrade head` on deploy, health check at `/api/health`
+- **Domain** — `kayal.akshitsharma.dev` (CNAME → Vercel); HTTPS required for mic/camera on phones
 
 ## Scope & upcoming features
 
