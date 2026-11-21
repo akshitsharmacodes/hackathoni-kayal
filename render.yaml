@@ -1,0 +1,26 @@
+# Render Blueprint: Kayal FastAPI backend.
+# Dashboard > Blueprints > New Blueprint -> this repo, or `render blueprint apply`.
+# Secrets are intentionally sync:false — set them once in the Render dashboard
+# (never commit real keys here).
+services:
+  - type: web
+    name: kayal-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    healthCheckPath: /api/health
+    buildCommand: pip install uv && uv sync && uv run alembic upgrade head
+    startCommand: uv run uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
+      - key: SARVAM_API_KEY
+        sync: false
+      - key: SMALLEST_API_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
