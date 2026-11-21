@@ -23,10 +23,7 @@ export function LiveNumbers() {
     <section className="border-t border-border">
       <div className="mx-auto w-full max-w-6xl px-6 py-16">
         <p className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
-          <span className="relative flex size-2">
-            <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-60" />
-            <span className="relative inline-flex size-2 rounded-full bg-primary" />
-          </span>
+          <span className="size-2 rounded-full bg-primary" />
           Live from the Alappuzha console
         </p>
         <dl className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-4">

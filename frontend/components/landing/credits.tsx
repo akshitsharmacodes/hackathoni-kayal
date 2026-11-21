@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/brand/logo";
+import { SPONSORS } from "./sponsors";
 import { CtaButtons } from "./cta-buttons";
 
 export function Credits() {
@@ -22,8 +23,19 @@ export function Credits() {
             <Link href="/report" className="hover:text-foreground">Citizen app</Link>
             <Link href="/dashboard" className="hover:text-foreground">Panchayat console</Link>
             <a href="#sources" className="hover:text-foreground">Sources</a>
+            <Link href="/about" className="hover:text-foreground">About</Link>
           </nav>
-          <p className="w-full font-mono text-xs text-muted-foreground sm:w-auto">Sarvam AI · smallest.ai · Devin · TinkerHub</p>
+          <p className="w-full font-mono text-xs text-muted-foreground sm:w-auto">
+            {SPONSORS.map((s, i) => (
+              <span key={s.name}>
+                {i > 0 && " · "}
+                <a href={s.url} target="_blank" rel="noreferrer" className="hover:text-foreground">{s.name}</a>
+              </span>
+            ))}
+          </p>
+        </div>
+        <div className="mx-auto w-full max-w-6xl px-6 pb-6">
+          <p className="font-mono text-[11px] text-muted-foreground/70">Built with heart in India.</p>
         </div>
       </div>
     </footer>

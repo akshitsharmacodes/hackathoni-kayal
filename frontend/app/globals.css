@@ -68,8 +68,8 @@
   }
 }
 
-/* Kayal design tokens (22 Nov redesign): backwater teal on off-white, Linear/Vercel-style precision.
-   Colour carries meaning only: teal = action, monsoon orange = alerts/needs attention, category colours on the map. */
+/* Kayal design tokens (22 Nov redesign): backwater green on off-white, Linear/Vercel-style precision.
+   Colour carries meaning only: green = action, monsoon orange = alerts/needs attention, category colours on the map. */
 :root {
   --background: #FAFAF7;
   --foreground: #111827;
@@ -77,34 +77,34 @@
   --card-foreground: #111827;
   --popover: #FFFFFF;
   --popover-foreground: #111827;
-  --primary: #0E5E5A;             /* backwater teal */
+  --primary: #1E5B3A;             /* backwater green */
   --primary-foreground: #FFFFFF;
   --secondary: #F2F3F0;
   --secondary-foreground: #111827;
   --muted: #F2F3F0;
   --muted-foreground: #6B7280;
-  --accent: #E8F2F1;              /* teal wash for hovers / selected */
-  --accent-foreground: #0B4A47;
+  --accent: #E9F1EB;              /* green wash for hovers / selected */
+  --accent-foreground: #134029;
   --gold: #E07A2E;                /* monsoon orange: alerts, "open", progress */
   --gold-ink: #B45309;            /* orange for small text, AA on off-white */
   --destructive: #DC2626;
   --border: #E5E7EB;
   --input: #E5E7EB;
-  --ring: #0E5E5A;
-  --chart-1: #0E5E5A;
+  --ring: #1E5B3A;
+  --chart-1: #1E5B3A;
   --chart-2: #E07A2E;
   --chart-3: #2563EB;
-  --chart-4: #16A34A;
+  --chart-4: #65A30D;
   --chart-5: #7C3AED;
   --radius: 0.5rem;
   --sidebar: #F6F6F3;
   --sidebar-foreground: #111827;
-  --sidebar-primary: #0E5E5A;
+  --sidebar-primary: #1E5B3A;
   --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: #ECEDEA;
   --sidebar-accent-foreground: #111827;
   --sidebar-border: #E5E7EB;
-  --sidebar-ring: #0E5E5A;
+  --sidebar-ring: #1E5B3A;
 }
 
 .dark {
@@ -114,33 +114,33 @@
   --card-foreground: #ECEEEF;
   --popover: #111416;
   --popover-foreground: #ECEEEF;
-  --primary: #3BB5AC;
-  --primary-foreground: #03201E;
+  --primary: #46A758;
+  --primary-foreground: #0C2314;
   --secondary: #171B1D;
   --secondary-foreground: #ECEEEF;
   --muted: #161A1C;
   --muted-foreground: #9AA3AB;
-  --accent: #12302E;
-  --accent-foreground: #9FE3DC;
+  --accent: #152A1B;
+  --accent-foreground: #A9DFC0;
   --gold: #F0904A;
   --gold-ink: #F5A66A;
   --destructive: #F05252;
   --border: #22272A;
   --input: #2A3034;
-  --ring: #3BB5AC;
-  --chart-1: #3BB5AC;
+  --ring: #46A758;
+  --chart-1: #46A758;
   --chart-2: #F0904A;
   --chart-3: #60A5FA;
-  --chart-4: #4ADE80;
+  --chart-4: #A3E635;
   --chart-5: #A78BFA;
   --sidebar: #0D1011;
   --sidebar-foreground: #ECEEEF;
-  --sidebar-primary: #3BB5AC;
-  --sidebar-primary-foreground: #03201E;
+  --sidebar-primary: #46A758;
+  --sidebar-primary-foreground: #0C2314;
   --sidebar-accent: #171B1D;
   --sidebar-accent-foreground: #ECEEEF;
   --sidebar-border: #1C2023;
-  --sidebar-ring: #3BB5AC;
+  --sidebar-ring: #46A758;
 }
 
 @layer base {

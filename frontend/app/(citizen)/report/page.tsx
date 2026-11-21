@@ -147,7 +147,7 @@ export default function ReportPage() {
           <ol className="mt-3 space-y-2.5">
             {t.nextSteps.map((s, i) => (
               <li key={s} className="flex gap-3 text-[15px] leading-snug">
-                <span className="tabular flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">{i + 1}</span>
+                <span className="mt-0.5 shrink-0 font-mono text-xs text-muted-foreground">{String(i + 1).padStart(2, "0")}</span>
                 {s}
               </li>
             ))}

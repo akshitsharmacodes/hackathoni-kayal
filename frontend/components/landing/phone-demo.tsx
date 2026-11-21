@@ -47,7 +47,7 @@ function ScreenSpeak() {
 function ScreenPin() {
   return (
     <div className="flex h-full flex-col gap-3 pt-2">
-      <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">Where is the problem?</p>
+      <p className="font-mono text-[11px] text-muted-foreground">Where is the problem?</p>
       <div className="relative h-40 overflow-hidden rounded-2xl bg-muted">
         <div className="absolute -left-4 top-16 h-8 w-[130%] -rotate-12 bg-accent" />
         <div className="absolute left-10 top-0 h-full w-5 rotate-6 bg-accent" />
@@ -76,7 +76,7 @@ function ScreenPin() {
 function ScreenSort() {
   return (
     <div className="flex h-full flex-col gap-3 pt-2">
-      <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">Is this right?</p>
+      <p className="font-mono text-[11px] text-muted-foreground">Is this right?</p>
       <div className="rounded-2xl border border-border bg-card p-3">
         <p lang="ml" className="text-[13px] leading-snug">കനാലിൽ പോള നിറഞ്ഞ് വള്ളം പോകാൻ കഴിയുന്നില്ല.</p>
         <p className="mt-1 flex items-center gap-1 text-[11px] text-muted-foreground"><MapPin className="size-3" /> Kainakary</p>

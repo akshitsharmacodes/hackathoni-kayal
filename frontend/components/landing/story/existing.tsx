@@ -63,8 +63,14 @@ export function Existing() {
                   {r.cite && <Cite n={r.cite} />}
                 </span>
               </p>
-              <p className="text-[15px] leading-relaxed text-muted-foreground">{r.good}</p>
-              <p className="text-[15px] leading-relaxed text-foreground/85">{r.gap}</p>
+              <p className="text-[15px] leading-relaxed text-muted-foreground">
+                <span className="mb-1 block font-mono text-[11px] md:hidden">Works well</span>
+                {r.good}
+              </p>
+              <p className="text-[15px] leading-relaxed text-foreground/85">
+                <span className="mb-1 block font-mono text-[11px] text-muted-foreground md:hidden">Gap</span>
+                {r.gap}
+              </p>
             </li>
           ))}
         </ul>

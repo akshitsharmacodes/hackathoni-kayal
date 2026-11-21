@@ -490,7 +490,7 @@ OTP verification, official login/roles, offline queue, WhatsApp/IVR channel (sma
 | D64 | Navigation | **Logo = Home everywhere**; Home · Citizen app · Panchayat console switcher in landing nav, citizen header and dashboard sidebar |
 | D65 | Sidebar | **Collapses to an icon rail** with tooltips (Ctrl/Cmd + B), state remembered |
 | D67 | Visual redesign (22 Nov, 02:55) | **Linear/Vercel precision**: hairline grids instead of floating rounded cards, numbered monospace section labels, tight headlines, colour only for meaning. Replaces the Kerala-earthy look of §10A |
-| D68 | Colour scheme | **Backwater teal `#0E5E5A` on off-white `#FAFAF7`**, ink `#111827`, monsoon orange `#E07A2E` for alerts / "open"; near-black dark theme; category colours re-tuned |
+| D68 | Colour scheme | **Backwater green `#1E5B3A` on off-white `#FAFAF7`**, ink `#111827`, monsoon orange `#E07A2E` for alerts / "open"; near-black dark theme; category colours re-tuned |
 | D69 | Typography | **Geist + Geist Mono** (labels, numbers) with Noto for Malayalam, Hindi, Tamil |
 | D66 | Welcoming | Time-of-day **greeting** on citizen home; **thank-you + "what happens next"** after sending; **help line** on every citizen page (helpline number via `NEXT_PUBLIC_HELPLINE`) |
 

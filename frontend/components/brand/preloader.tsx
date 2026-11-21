@@ -22,7 +22,7 @@ export function Preloader() {
           <path className="pl-draw" pathLength={1} d="M36 160h48M42 160c2-12 34-12 36 0M50 148c3-6 17-6 20 0" />
           <path className="pl-draw" pathLength={1} d="M60 84V72" />
         </svg>
-        <p lang="ml" className="pl-brand mt-4 text-2xl font-semibold tracking-tight text-[#0E5E5A] dark:text-[#3BB5AC]">
+        <p lang="ml" className="pl-brand mt-4 text-2xl font-semibold tracking-tight text-[#1E5B3A] dark:text-[#46A758]">
           കായൽ <span className="text-base font-medium text-[#6B7280]">Kayal</span>
         </p>
         <p className="pl-brand mt-1 text-xs tracking-wide text-[#6B7280]">{TAGLINE}</p>
