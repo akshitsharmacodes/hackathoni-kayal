@@ -76,7 +76,7 @@ function ScreenReview({ focus }: { focus: "pin" | "type" }) {
       </div>
 
       <p className="font-mono text-[10px] text-muted-foreground">LOCATION</p>
-      <div className="relative h-20 shrink-0 overflow-hidden rounded-lg border border-border bg-muted">
+      <div className="relative h-[4.5rem] shrink-0 overflow-hidden rounded-lg border border-border bg-muted">
         <div className="absolute -left-4 top-7 h-7 w-[140%] -rotate-6 bg-accent" aria-hidden />
         <div className="absolute left-[30%] top-0 h-full w-5 rotate-6 bg-accent/80" aria-hidden />
         <div className="absolute left-[72%] top-0 h-full w-3.5 -rotate-3 bg-accent/60" aria-hidden />
@@ -121,7 +121,7 @@ function ScreenReview({ focus }: { focus: "pin" | "type" }) {
           </motion.span>
         ))}
       </div>
-      <div className="mt-auto">
+      <div className="mt-auto shrink-0">
         <span className="flex h-9 items-center justify-center rounded-lg bg-primary text-xs font-medium text-primary-foreground">Send</span>
       </div>
     </div>
@@ -222,7 +222,7 @@ export function PhoneDemo() {
           <span lang="ml" className="text-sm font-semibold text-primary">കായൽ</span>
           <span className="rounded-full border border-border px-2 py-0.5 text-[10px] text-muted-foreground">മലയാളം</span>
         </div>
-        <div className="relative mt-3 h-[21rem]">
+        <div className="relative mt-3 h-[23rem] overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.div
               key={screenKey}
@@ -239,7 +239,7 @@ export function PhoneDemo() {
       </div>
 
       {/* Step indicator */}
-      <ol className="mt-5 flex w-[16.5rem] justify-between">
+      <ol className="mt-6 flex w-[16.5rem] justify-between">
         {STEPS.map((s, i) => (
           <li key={s}>
             <button
