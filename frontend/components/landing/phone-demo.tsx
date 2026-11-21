@@ -180,7 +180,11 @@ export function PhoneDemo() {
   return (
     <div className="relative mx-auto w-full max-w-[24rem] select-none" aria-label="Demo of reporting a problem in Kayal">
       {/* Phone */}
-      <div className="relative w-[16.5rem] rounded-[2rem] border border-border bg-card p-4 shadow-sm">
+      <motion.div
+        whileHover={reduce ? undefined : { y: -4 }}
+        transition={{ type: "spring", stiffness: 300, damping: 22 }}
+        className="relative mx-auto w-[16.5rem] rounded-[2rem] border border-border bg-card p-4 shadow-sm transition-shadow duration-300 hover:shadow-md"
+      >
         <div className="mx-auto mb-3 h-1 w-14 rounded-full bg-foreground/15" aria-hidden />
         <div className="flex items-baseline justify-between">
           <span lang="ml" className="text-sm font-semibold text-primary">കായൽ</span>
@@ -200,16 +204,16 @@ export function PhoneDemo() {
             </motion.div>
           </AnimatePresence>
         </div>
-      </div>
+      </motion.div>
 
       {/* Step indicator */}
-      <ol className="mt-6 flex w-[16.5rem] justify-between">
+      <ol className="mx-auto mt-6 flex w-[16.5rem] justify-between">
         {STEPS.map((s, i) => (
           <li key={s}>
             <button
               type="button"
               onClick={() => setStep(i)}
-              className={cn("flex flex-col items-center gap-1.5 font-mono text-[10px] transition-colors", i === step ? "text-foreground" : "text-muted-foreground hover:text-foreground")}
+              className={cn("flex flex-col items-center gap-1.5 font-mono text-[10px] transition-[color,transform] duration-200 active:scale-90", i === step ? "text-foreground" : "text-muted-foreground hover:text-foreground")}
             >
               <span className={cn("h-px w-10 transition-colors", i === step ? "bg-primary" : "bg-border")} />
               {s}

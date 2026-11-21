@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { TAGLINE } from "@/components/brand/logo";
 import { CtaButtons } from "./cta-buttons";
 import { PhoneDemo } from "./phone-demo";
@@ -12,6 +12,8 @@ export function Hero() {
   const reduce = useReducedMotion();
   const rise = (delay: number) =>
     reduce ? {} : { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.5, ease: "easeOut" as const, delay } };
+  const { scrollY } = useScroll();
+  const parallax = useTransform(scrollY, [0, 500], [0, reduce ? 0 : -32]);
 
   return (
     <section id="top" className="relative isolate overflow-hidden">
@@ -44,6 +46,7 @@ export function Hero() {
           initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
+          style={{ y: parallax }}
           className="flex justify-center lg:justify-end"
         >
           <PhoneDemo />
