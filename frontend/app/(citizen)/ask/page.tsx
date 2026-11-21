@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useLanguage } from "@/hooks/use-language";
 import { useLocation } from "@/hooks/use-location";
 import { audioFilename, toSpeechWav, useRecorder } from "@/hooks/use-recorder";
-import { api, type AskResult } from "@/lib/api";
+import { api, ApiError, type AskResult } from "@/lib/api";
 import { playBase64Wav } from "@/lib/kayal";
 
 // PRD §7.2: same giant-mic screen in gold; one-shot question → spoken answer (D19).
@@ -41,7 +41,7 @@ export default function AskPage() {
       setAnswer(r);
       playBase64Wav(r.answer_audio);
     } catch (e) {
-      toast.error(t.error);
+      toast.error(e instanceof ApiError && e.status === 400 && audio ? t.noSpeech : t.error);
     } finally {
       setBusy(false);
     }
@@ -49,8 +49,10 @@ export default function AskPage() {
 
   async function onMic() {
     if (recorder.state === "recording") return recorder.stop();
+    const started = Date.now();
     const audio = await recorder.start();
     if (!audio) return toast.error(t.micDenied);
+    if (Date.now() - started < 1200) return toast.error(t.noSpeech);
     ask(audio);
   }
 

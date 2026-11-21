@@ -1,6 +1,7 @@
 """/api/reports: analyse → submit → track → manage (PRD §13)."""
 import logging
 import os
+import re
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 
@@ -86,6 +87,10 @@ def analyze(
         transcript = text.strip()
         if audio_in:
             transcript, _ = upstream("Speech recognition", sarvam.transcribe, *audio_in, language)
+        # Speech models sometimes "hear" a single letter in silence (e.g. "അ"), so require ≥ 2 real characters.
+        if audio_in and len(re.sub(r"[\s.,!?।|]+", "", transcript)) < 2 and not photo_in:
+            # Nothing was heard (accidental tap, noisy boat): don't invent a report.
+            raise HTTPException(422, "No speech detected")
         info = upstream("Report analysis", sarvam.classify, transcript, photo_in[0] if photo_in else None, language)
 
         photo_url, audio_url = _result(photo_job, "photo upload"), _result(audio_job, "audio upload")

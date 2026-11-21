@@ -19,7 +19,7 @@ const SEV: Record<Alert["severity"], string> = {
   warning: "bg-accent text-accent-foreground",
   danger: "bg-destructive/10 text-destructive",
 };
-const GAUGE: Record<string, string> = { normal: "text-primary", warning: "text-[color:var(--gold)]", danger: "text-destructive", unknown: "text-muted-foreground" };
+const GAUGE: Record<string, string> = { normal: "text-primary", warning: "text-gold-ink", danger: "text-destructive", unknown: "text-muted-foreground" };
 const select = "h-9 w-full rounded-lg border border-input bg-background px-2.5 text-sm";
 
 export default function AlertsPage() {

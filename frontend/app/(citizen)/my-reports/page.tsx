@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowLeft, MapPin } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -24,6 +24,11 @@ const TONE: Record<Status, string> = {
 export default function MyReportsPage() {
   const { language, t } = useLanguage();
   const [phone, setPhone] = useState("");
+  useEffect(() => {
+    try {
+      setPhone(localStorage.getItem("kayal.phone") ?? "");
+    } catch {}
+  }, []);
   const [busy, setBusy] = useState(false);
   const [items, setItems] = useState<ReportDetail[] | null>(null);
 

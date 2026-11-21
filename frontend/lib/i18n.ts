@@ -48,6 +48,7 @@ type Strings = {
   mapHintOff: string;
   pinCorrect: string;
   pinNeeded: string;
+  noSpeech: string;
   categories: Record<Category, string>;
   statuses: Record<Status, string>;
 };
@@ -93,6 +94,7 @@ export const STRINGS: Record<Language, Strings> = {
     mapHintOff: "ലൊക്കേഷൻ ഓൺ ചെയ്യൂ, അല്ലെങ്കിൽ മാപ്പിൽ കൃത്യ സ്ഥലം തൊടൂ",
     pinCorrect: "സ്ഥലം ശരിയാണ്",
     pinNeeded: "അയയ്ക്കാൻ കൃത്യ സ്ഥലം വേണം",
+    noSpeech: "ശബ്ദം കേട്ടില്ല. ഫോൺ അടുത്ത് പിടിച്ച് വീണ്ടും പറയൂ.",
     categories: { plastic: "പ്ലാസ്റ്റിക്", water_hyacinth: "പോള", oil: "എണ്ണ", flooding: "വെള്ളക്കെട്ട്", broken_jetty: "ജെട്ടി തകർച്ച", other: "മറ്റുള്ളവ" },
     statuses: { draft: "കരട്", open: "ലഭിച്ചു", in_progress: "നടപടിയിൽ", resolved: "പരിഹരിച്ചു", rejected: "നിരസിച്ചു", duplicate: "ആവർത്തനം" },
   },
@@ -136,6 +138,7 @@ export const STRINGS: Record<Language, Strings> = {
     mapHintOff: "लोकेशन चालू करें या नक्शे पर सही जगह छुएँ",
     pinCorrect: "जगह सही है",
     pinNeeded: "भेजने के लिए सही जगह चाहिए",
+    noSpeech: "आवाज़ सुनाई नहीं दी। फ़ोन पास रखकर फिर से बोलें।",
     categories: { plastic: "प्लास्टिक", water_hyacinth: "जलकुंभी", oil: "तेल", flooding: "जलभराव", broken_jetty: "टूटी जेट्टी", other: "अन्य" },
     statuses: { draft: "ड्राफ़्ट", open: "मिली", in_progress: "काम जारी", resolved: "हल हुई", rejected: "अस्वीकार", duplicate: "दोहराई गई" },
   },
@@ -179,6 +182,7 @@ export const STRINGS: Record<Language, Strings> = {
     mapHintOff: "இருப்பிடத்தை இயக்கவும் அல்லது வரைபடத்தில் சரியான இடத்தைத் தொடவும்",
     pinCorrect: "இடம் சரி",
     pinNeeded: "அனுப்ப சரியான இடம் தேவை",
+    noSpeech: "குரல் கேட்கவில்லை. போனை அருகில் வைத்து மீண்டும் பேசவும்.",
     categories: { plastic: "பிளாஸ்டிக்", water_hyacinth: "ஆகாயத் தாமரை", oil: "எண்ணெய்", flooding: "வெள்ளம்", broken_jetty: "உடைந்த துறை", other: "மற்றவை" },
     statuses: { draft: "வரைவு", open: "பெறப்பட்டது", in_progress: "நடவடிக்கையில்", resolved: "தீர்ந்தது", rejected: "நிராகரிப்பு", duplicate: "நகல்" },
   },
@@ -222,6 +226,7 @@ export const STRINGS: Record<Language, Strings> = {
     mapHintOff: "Turn on location, or tap the exact spot on the map",
     pinCorrect: "Location is correct",
     pinNeeded: "An exact location is needed to send",
+    noSpeech: "We couldn't hear that. Hold the phone closer and speak again.",
     categories: { plastic: "Plastic", water_hyacinth: "Water hyacinth", oil: "Oil", flooding: "Flooding", broken_jetty: "Broken jetty", other: "Other" },
     statuses: { draft: "Draft", open: "Received", in_progress: "In progress", resolved: "Resolved", rejected: "Rejected", duplicate: "Duplicate" },
   },

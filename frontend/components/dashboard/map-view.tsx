@@ -1,7 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 import { Flame } from "lucide-react";
 import { ReportSheet } from "@/components/dashboard/report-sheet";
 import { CategoryDot, StatusBadge } from "@/components/dashboard/status-badge";
@@ -23,6 +24,25 @@ export function MapView() {
   const { data: gauges = [] } = useGauges();
   const { data: stats } = useStats();
   const [selected, setSelected] = useState<number | null>(null);
+
+  // Officials should not miss a new report: announce anything newer than what was on screen.
+  const lastSeen = useRef<number | null>(null);
+  useEffect(() => {
+    if (reports.length === 0) return;
+    const maxId = Math.max(...reports.map((r) => r.id));
+    if (lastSeen.current !== null && maxId > lastSeen.current) {
+      reports
+        .filter((r) => r.id > lastSeen.current!)
+        .slice(0, 3)
+        .forEach((r) =>
+          toast(`New report #${r.id} · ${CATEGORY[r.category].en}`, {
+            description: `${r.place_name} · severity ${r.severity}/5`,
+            action: { label: "Open", onClick: () => setSelected(r.id) },
+          }),
+        );
+    }
+    lastSeen.current = maxId;
+  }, [reports]);
 
   const latest = reports.slice(0, 40);
 

@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowRight, Camera, CheckCircle2, LocateFixed, LocateOff, MapPin, RotateCcw, Volume2, X } from "lucide-react";
 import { toast } from "sonner";
 import { CategoryChips } from "@/components/citizen/category-chips";
@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { useLanguage } from "@/hooks/use-language";
 import { GOOD_ACCURACY_M, resizePhoto, useLocation } from "@/hooks/use-location";
 import { audioFilename, toSpeechWav, useRecorder } from "@/hooks/use-recorder";
-import { api, type AnalyzeResult, type Category, type Pin, type SubmitResult } from "@/lib/api";
+import { api, ApiError, type AnalyzeResult, type Category, type Pin, type SubmitResult } from "@/lib/api";
 import { ALAPPUZHA, playBase64Wav } from "@/lib/kayal";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -37,6 +37,12 @@ export default function ReportPage() {
   const [draft, setDraft] = useState<AnalyzeResult | null>(null);
   const [category, setCategory] = useState<Category>("other");
   const [phone, setPhone] = useState("");
+  // Remember the citizen's number on this device so they type it only once (also pre-fills "My complaints").
+  useEffect(() => {
+    try {
+      setPhone(localStorage.getItem("kayal.phone") ?? "");
+    } catch {}
+  }, []);
   const [result, setResult] = useState<SubmitResult | null>(null);
 
   const lang = language ?? "ml-IN";
@@ -70,16 +76,22 @@ export default function ReportPage() {
       setCategory(d.ai_category);
       setStep("review");
     } catch (e) {
-      toast.error(t.error);
+      toast.error(e instanceof ApiError && e.status === 422 ? t.noSpeech : t.error);
       setStep("home");
     }
   }
 
   async function onMic() {
     if (recorder.state === "recording") return recorder.stop();
+    const started = Date.now();
     const audio = await recorder.start();
-    if (recorder.state === "denied" || audio === null) {
-      if (audio === null) toast.error(t.micDenied);
+    if (audio === null) {
+      toast.error(t.micDenied);
+      return;
+    }
+    // An accidental double tap gives a near-empty clip: ask again instead of filing a report.
+    if (Date.now() - started < 1200) {
+      toast.error(t.noSpeech);
       return;
     }
     analyze(audio);
@@ -99,6 +111,9 @@ export default function ReportPage() {
     setStep("sending");
     try {
       const r = await api.submit(draft.draft_id, category, pin, phone.trim() || undefined);
+      try {
+        if (phone.trim()) localStorage.setItem("kayal.phone", phone.trim());
+      } catch {}
       setResult(r);
       setStep("done");
       playBase64Wav(r.reply_audio);
@@ -113,7 +128,6 @@ export default function ReportPage() {
     setPhoto(null);
     setDraft(null);
     setResult(null);
-    setPhone("");
     setManualPin(null);
     setStep("home");
   }
@@ -158,7 +172,7 @@ export default function ReportPage() {
           <div className="relative h-52 overflow-hidden rounded-3xl border border-border">
             <PinMap pin={pin} accuracy={pin?.source === "gps" ? pin.accuracy : null} onPlace={onPlace} />
           </div>
-          <p className={pinOk ? "text-sm text-muted-foreground" : "text-sm font-medium text-[color:var(--gold)]"}>
+          <p className={pinOk ? "text-sm text-muted-foreground" : "text-sm font-medium text-gold-ink"}>
             {!pin ? t.mapHintOff : pinOk ? t.mapHintGood : t.mapHintWeak}
             {pin?.source === "gps" && pin.accuracy !== null && <span className="tabular"> · ±{pin.accuracy} m</span>}
           </p>
@@ -189,7 +203,7 @@ export default function ReportPage() {
           <p className="text-sm text-muted-foreground">{t.phoneHint}</p>
         </section>
 
-        <div className="mt-auto space-y-3 pt-2">
+        <div className="sticky bottom-0 -mx-5 mt-auto space-y-2 border-t border-border bg-background/95 px-5 pb-4 pt-3 backdrop-blur">
           <Button onClick={send} disabled={step === "sending" || !pinOk} className="h-14 w-full rounded-2xl text-lg">
             {step === "sending" ? t.sending : t.send}
           </Button>

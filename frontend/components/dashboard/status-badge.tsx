@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 // rejected (muted), duplicate (grey dashed).
 const STYLE: Record<Status, string> = {
   draft: "border-border text-muted-foreground",
-  open: "border-gold/60 text-[color:var(--gold)]",
+  open: "border-gold/60 text-gold-ink",
   in_progress: "border-transparent bg-primary/10 text-primary",
   resolved: "border-transparent bg-primary text-primary-foreground",
   rejected: "border-transparent bg-muted text-muted-foreground",

@@ -83,7 +83,7 @@ export function ReportSheet({ id, onClose }: { id: number | null; onClose: () =>
             <div className="space-y-6 p-6">
               {r.possible_duplicate_of && r.status !== "duplicate" && (
                 <div className="flex items-start gap-3 rounded-xl border border-gold/40 bg-accent/60 p-3 text-sm">
-                  <AlertTriangle className="mt-0.5 size-4 shrink-0 text-[color:var(--gold)]" />
+                  <AlertTriangle className="mt-0.5 size-4 shrink-0 text-gold-ink" />
                   <div className="flex-1">
                     Possible duplicate of <b>#{r.possible_duplicate_of}</b> (same issue within 200 m, 24 h).
                   </div>
