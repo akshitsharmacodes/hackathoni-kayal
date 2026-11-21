@@ -113,16 +113,17 @@ const STEPS = [
 export function How() {
   return (
     <StorySection
+      id="how"
       eyebrow="How Kayal works"
       title={<>From a voice on the water to a pin on the panchayat map</>}
       intro="Built for people who would rather speak than type. One action per screen, every step spoken back."
     >
       <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
         {STEPS.map((s, i) => (
-          <Reveal key={s.n} delay={i * 0.06} className="flex flex-col gap-5 rounded-3xl border border-border bg-card p-5">
+          <Reveal key={s.n} delay={i * 0.08} lift className="flex flex-col gap-5 rounded-3xl border border-border bg-card p-5">
             {s.mock}
             <div>
-              <p className="tabular text-xs font-medium text-[color:var(--gold)]">{s.n}</p>
+              <p className="tabular text-xs font-medium text-gold-ink">{s.n}</p>
               <h3 className="mt-1 text-lg font-semibold leading-snug tracking-tight">{s.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.text}</p>
             </div>

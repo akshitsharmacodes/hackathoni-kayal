@@ -43,13 +43,14 @@ const PEOPLE = [
 export function Benefits() {
   return (
     <StorySection
+      id="benefits"
       eyebrow="Who benefits"
       tinted
       title={<>A daily utility for citizens, a working tool for civic bodies</>}
     >
       <div className="grid gap-4 sm:grid-cols-2">
         {PEOPLE.map((p, i) => (
-          <Reveal key={p.who} delay={(i % 2) * 0.08} className="rounded-3xl border border-border bg-card p-7">
+          <Reveal key={p.who} delay={(i % 2) * 0.08} lift className="rounded-3xl border border-border bg-card p-7">
             <p className="flex items-center gap-3 text-lg font-semibold tracking-tight">
               <span className="flex size-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                 <p.icon className="size-5" />

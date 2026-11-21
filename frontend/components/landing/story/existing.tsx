@@ -33,6 +33,7 @@ const ROWS = [
 export function Existing() {
   return (
     <StorySection
+      id="today"
       eyebrow="What exists today"
       title={<>Good channels, but none built for the backwaters</>}
       intro="Kayal doesn't replace these. It fills the gap between a fisher's voice and an official's map."
@@ -45,7 +46,7 @@ export function Existing() {
         </div>
         <ul className="divide-y divide-border">
           {ROWS.map((r) => (
-            <li key={r.name} className="grid gap-3 px-7 py-6 md:grid-cols-[1.2fr_1fr_1.3fr] md:gap-6">
+            <li key={r.name} className="grid gap-3 px-7 py-6 transition-colors hover:bg-muted/40 md:grid-cols-[1.2fr_1fr_1.3fr] md:gap-6">
               <p className="flex items-start gap-3 font-medium">
                 <r.icon className="mt-0.5 size-5 shrink-0 text-muted-foreground" />
                 <span>

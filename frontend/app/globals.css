@@ -10,6 +10,7 @@
   --font-sans: var(--font-inter), var(--font-noto-ml), var(--font-noto-deva), var(--font-noto-ta), ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, monospace;
   --color-gold: var(--gold);
+  --color-gold-ink: var(--gold-ink);
   --font-heading: var(--font-inter), var(--font-noto-ml), var(--font-noto-deva), var(--font-noto-ta), ui-sans-serif, system-ui, sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -84,6 +85,7 @@
   --accent: #F3E6C4;              /* soft gold wash */
   --accent-foreground: #5C4413;
   --gold: #B8892B;                /* kasavu gold */
+  --gold-ink: #7E5A12;            /* gold for small text, 5.6:1 on cream (WCAG AA) */
   --destructive: #A33A2B;
   --border: #E6DDC8;
   --input: #E1D6BE;
@@ -120,6 +122,7 @@
   --accent: #2E2818;
   --accent-foreground: #E9CF8E;
   --gold: #D4A84A;
+  --gold-ink: #E2BD6A;
   --destructive: #D0604F;
   --border: #2E2A22;
   --input: #3A352B;

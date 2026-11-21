@@ -42,6 +42,7 @@ const PROBLEMS = [
 export function Problem() {
   return (
     <StorySection
+      id="problem"
       eyebrow="The problem"
       tinted
       title={<>What is going wrong, and why</>}
@@ -49,7 +50,9 @@ export function Problem() {
     >
       <div className="grid gap-4 sm:grid-cols-2">
         {PROBLEMS.map((p, i) => (
-          <Reveal key={p.title} delay={(i % 2) * 0.08} className="flex flex-col rounded-3xl border border-border bg-card p-7">
+          <Reveal key={p.title} delay={(i % 2) * 0.08} lift className="relative flex flex-col overflow-hidden rounded-3xl border border-border bg-card p-7">
+            <span aria-hidden className="absolute inset-x-0 top-0 h-1" style={{ backgroundColor: p.color }} />
+            <span aria-hidden className="tabular absolute right-6 top-5 text-5xl font-semibold text-foreground/5">0{i + 1}</span>
             <span className="flex size-11 items-center justify-center rounded-2xl" style={{ backgroundColor: `${p.color}1A`, color: p.color }}>
               <p.icon className="size-5" />
             </span>

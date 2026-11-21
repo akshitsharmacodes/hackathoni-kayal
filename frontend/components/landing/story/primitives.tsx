@@ -3,16 +3,30 @@
 import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 
-/** Fade/slide in once when scrolled into view (calm editorial motion). */
-export function Reveal({ children, className, delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+/** Fade/slide in once when scrolled into view. `lift` adds a gentle hover lift for cards. */
+export function Reveal({
+  children,
+  className,
+  delay = 0,
+  lift = false,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+  lift?: boolean;
+}) {
   const reduce = useReducedMotion();
   return (
     <motion.div
-      className={className}
-      initial={reduce ? false : { opacity: 0, y: 18 }}
+      className={cn(
+        lift && "transition-shadow duration-300 hover:shadow-[0_28px_56px_-32px_rgba(31,77,58,0.38)]",
+        className,
+      )}
+      initial={reduce ? false : { opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
+      whileHover={lift && !reduce ? { y: -4 } : undefined}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, ease: "easeOut", delay }}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay }}
     >
       {children}
     </motion.div>
@@ -37,10 +51,13 @@ export function StorySection({
   tinted?: boolean;
 }) {
   return (
-    <section id={id} className={cn(tinted && "border-y border-border bg-card/60", className)}>
+    <section id={id} className={cn("scroll-mt-16", tinted && "border-y border-border bg-card/60", className)}>
       <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-28">
         <Reveal className="max-w-3xl">
-          <p className="text-xs font-medium uppercase tracking-[0.3em] text-[color:var(--gold)]">{eyebrow}</p>
+          <p className="flex items-center gap-3 text-xs font-medium uppercase tracking-[0.3em] text-gold-ink">
+            <span className="h-px w-8 bg-[color:var(--gold)]" aria-hidden />
+            {eyebrow}
+          </p>
           <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">{title}</h2>
           {intro && <p className="mt-5 text-lg leading-relaxed text-muted-foreground">{intro}</p>}
         </Reveal>
@@ -54,9 +71,9 @@ export function StorySection({
 export function Cite({ n }: { n: number | number[] }) {
   const ids = Array.isArray(n) ? n : [n];
   return (
-    <sup className="ml-0.5 text-[0.65em] font-medium">
+    <sup className="ml-0.5 text-[0.7em] font-medium">
       {ids.map((id, i) => (
-        <a key={id} href={`#source-${id}`} className="text-[color:var(--gold)] hover:underline">
+        <a key={id} href={`#source-${id}`} className="text-gold-ink hover:underline" aria-label={`Source ${id}`}>
           {i > 0 ? "," : ""}[{id}]
         </a>
       ))}
