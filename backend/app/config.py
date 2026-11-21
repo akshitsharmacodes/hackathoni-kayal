@@ -2,11 +2,19 @@
 
 Each field maps to an env var with the same name in UPPER_CASE, e.g. sarvam_api_key <- SARVAM_API_KEY.
 """
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
+    # Pasted env values often carry a trailing newline/space (e.g. into a host's dashboard),
+    # which silently corrupts URLs and keys — strip everything.
+    @field_validator("*", mode="before")
+    @classmethod
+    def _strip(cls, v):
+        return v.strip() if isinstance(v, str) else v
 
     sarvam_api_key: str
     smallest_api_key: str = ""
