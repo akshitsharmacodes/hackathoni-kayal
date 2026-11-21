@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import { TAGLINE } from "@/components/brand/logo";
 import { CtaButtons } from "./cta-buttons";
-import { MapPanel } from "./map-panel";
+import { PhoneDemo } from "./phone-demo";
 import { SPONSORS } from "./sponsors";
 
 const META = ["Malayalam · हिन्दी · தமிழ் · English", "Exact pin, GPS ±30 m", "Status you can check"];
@@ -46,7 +46,7 @@ export function Hero() {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
           className="flex justify-center lg:justify-end"
         >
-          <MapPanel />
+          <PhoneDemo />
         </motion.div>
       </div>
       <div className="border-t border-border">
