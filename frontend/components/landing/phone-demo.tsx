@@ -179,42 +179,6 @@ export function PhoneDemo() {
 
   return (
     <div className="relative mx-auto w-full max-w-[24rem] select-none" aria-label="Demo of reporting a problem in Kayal">
-      {/* Console card reacting behind the phone */}
-      <div className="absolute -right-3 top-8 hidden w-56 rounded-xl border border-border bg-card p-3 shadow-sm sm:block" aria-hidden>
-        <p className="font-mono text-[10px] text-muted-foreground">PANCHAYAT CONSOLE</p>
-        <div className="relative mt-2 h-32 overflow-hidden rounded-lg bg-muted">
-          <div className="absolute left-[45%] top-0 h-full w-5 rotate-12 bg-accent" />
-          {[[20, 30, "#EA580C"], [70, 25, "#2563EB"], [80, 70, "#374151"], [35, 75, "#A16207"], [60, 50, "#2563EB"]].map(([x, y, c], i) => (
-            <span key={i} className="absolute size-2.5 rounded-full" style={{ left: `${x}%`, top: `${y}%`, backgroundColor: c as string }} />
-          ))}
-          <AnimatePresence>
-            {sent && (
-              <motion.span
-                key="new-pin"
-                className="absolute left-[42%] top-[42%] size-3 rounded-full border-2 border-white bg-[#16A34A]"
-                initial={{ scale: 0 }}
-                animate={{ scale: [0, 1.5, 1] }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.55 }}
-              />
-            )}
-          </AnimatePresence>
-        </div>
-        <AnimatePresence>
-          {sent && (
-            <motion.p
-              key="toast"
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              className="mt-2 flex items-center gap-1.5 rounded-md border border-border px-2 py-1.5 text-[10px] text-foreground"
-            >
-              <span className="size-1.5 rounded-full bg-primary" /> New · Water hyacinth · Kainakary
-            </motion.p>
-          )}
-        </AnimatePresence>
-      </div>
-
       {/* Phone */}
       <div className="relative w-[16.5rem] rounded-[2rem] border border-border bg-card p-4 shadow-sm">
         <div className="mx-auto mb-3 h-1 w-14 rounded-full bg-foreground/15" aria-hidden />
