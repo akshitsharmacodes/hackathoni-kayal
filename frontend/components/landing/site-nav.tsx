@@ -4,6 +4,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion, useScroll, useSpring } from "motion/react";
 import { ArrowRight } from "lucide-react";
+import { AppSwitcher } from "@/components/brand/app-switcher";
+import { Logo } from "@/components/brand/logo";
+import { ThemeToggle } from "@/components/brand/theme-toggle";
 import { cn } from "@/lib/utils";
 
 export const SECTIONS = [
@@ -53,9 +56,8 @@ export function SiteNav() {
         )}
       >
         <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-4 px-6">
-          <a href="#top" className="flex items-baseline gap-2">
-            <span lang="ml" className="text-lg font-semibold tracking-tight text-primary">കായൽ</span>
-            <span className="text-sm font-medium text-muted-foreground">Kayal</span>
+          <a href="#top" aria-label="Kayal home" className="shrink-0">
+            <Logo markClassName="size-8" />
           </a>
           <ul className="hidden items-center gap-1 md:flex">
             {SECTIONS.map(({ id, label }) => (
@@ -76,12 +78,16 @@ export function SiteNav() {
               </li>
             ))}
           </ul>
-          <Link
-            href="/report"
-            className="group flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Try Kayal <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
-          </Link>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <AppSwitcher />
+            <Link
+              href="/report"
+              className="group hidden items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 sm:flex"
+            >
+              Try Kayal <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+            </Link>
+          </div>
         </div>
       </nav>
     </header>

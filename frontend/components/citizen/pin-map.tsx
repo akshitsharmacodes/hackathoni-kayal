@@ -2,6 +2,7 @@
 
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { useTheme } from "next-themes";
 import { useEffect, useMemo } from "react";
 import { Circle, MapContainer, Marker, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import { ALAPPUZHA } from "@/lib/kayal";
@@ -37,6 +38,7 @@ export default function PinMap({
   accuracy: number | null;
   onPlace: (lat: number, lng: number) => void;
 }) {
+  const { resolvedTheme } = useTheme();
   const center = pin ?? ALAPPUZHA;
   const handlers = useMemo(
     () => ({
@@ -50,7 +52,7 @@ export default function PinMap({
 
   return (
     <MapContainer center={[center.lat, center.lng]} zoom={pin ? 17 : 12} zoomControl={false} attributionControl={false} className="size-full">
-      <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" className="kayal-tiles" />
+      <TileLayer key={resolvedTheme} url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" className={resolvedTheme === "dark" ? "kayal-tiles-dark" : "kayal-tiles"} />
       <TapToPlace onPlace={onPlace} />
       {pin && (
         <>

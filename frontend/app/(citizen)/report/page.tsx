@@ -140,6 +140,18 @@ export default function ReportPage() {
         <div className="space-y-3">
           <h1 className="text-[28px] font-semibold">{t.registered(result.report.id)}</h1>
           <p className="text-lg leading-relaxed text-muted-foreground">{result.reply_text}</p>
+          <p className="font-medium text-primary">{t.thankYou}</p>
+        </div>
+        <div className="w-full rounded-3xl border border-border bg-card p-5 text-left">
+          <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{t.nextTitle}</p>
+          <ol className="mt-3 space-y-2.5">
+            {t.nextSteps.map((s, i) => (
+              <li key={s} className="flex gap-3 text-[15px] leading-snug">
+                <span className="tabular flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">{i + 1}</span>
+                {s}
+              </li>
+            ))}
+          </ol>
         </div>
         <button onClick={() => playBase64Wav(result.reply_audio)} className="flex items-center gap-2 text-primary">
           <Volume2 className="size-5" /> {t.playAgain}
@@ -221,6 +233,10 @@ export default function ReportPage() {
   return (
     <div className="flex flex-1 flex-col">
       <div className="flex flex-1 flex-col items-center justify-center gap-8">
+        <div className="text-center">
+          <p className="text-2xl font-semibold tracking-tight">{t.greeting(new Date().getHours())}</p>
+          <p className="mt-1 text-muted-foreground">{t.greetingSub}</p>
+        </div>
         <div className="relative">
           <MicButton
             state={busy ? "busy" : recorder.state === "recording" ? "recording" : "idle"}

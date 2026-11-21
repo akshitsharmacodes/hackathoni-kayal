@@ -1,3 +1,4 @@
+import { Logo } from "@/components/brand/logo";
 import { CtaButtons } from "./cta-buttons";
 
 const CREDITS = ["Sarvam AI", "smallest.ai", "Devin", "TinkerHub"];
@@ -18,9 +19,9 @@ export function Credits() {
               <li key={c}>{c}</li>
             ))}
           </ul>
-          <p lang="ml" className="mt-10 text-sm text-muted-foreground">
-            കായൽ Kayal · Alappuzha
-          </p>
+          <div className="mt-10 flex justify-center">
+            <Logo tagline markClassName="size-10" />
+          </div>
         </div>
       </div>
     </footer>

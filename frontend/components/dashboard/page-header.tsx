@@ -4,7 +4,7 @@ export function PageHeader({ title, description, children }: { title: string; de
   return (
     <header className="flex items-center justify-between gap-4 border-b border-border px-6 py-4">
       <div className="flex items-center gap-3">
-        <SidebarTrigger className="md:hidden" />
+        <SidebarTrigger aria-label="Collapse or expand the sidebar (Ctrl/Cmd + B)" />
         <div>
           <h1 className="text-lg font-semibold tracking-tight">{title}</h1>
           {description && <p className="text-sm text-muted-foreground">{description}</p>}

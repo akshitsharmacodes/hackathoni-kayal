@@ -479,4 +479,16 @@ OTP verification, official login/roles, offline queue, WhatsApp/IVR channel (sma
 | D58 | Streaming STT | **Keep record-then-upload** (D23) |
 | D59 | Hosting | **Keep laptop + tunnel for the demo**; cloud deployment is post-hackathon work |
 
+### Brand, theme and navigation (decided 22 Nov, 02:45)
+
+| # | Question | Decision |
+|---|---|---|
+| D60 | Logo | **Hand-crafted SVG**: lamp flame (nilavilakku) over backwater waves; wordmark "കായൽ Kayal"; also the favicon and app icon |
+| D61 | Tagline | **"Your voice. Our waters. Together."** |
+| D62 | Preloader | **Nilavilakku lamp lighting**, CSS only, once per browser session, skipped for reduced motion |
+| D63 | Theme | **Light/dark everywhere, follows the device, toggle remembered** (replaces D35) |
+| D64 | Navigation | **Logo = Home everywhere**; Home · Citizen app · Panchayat console switcher in landing nav, citizen header and dashboard sidebar |
+| D65 | Sidebar | **Collapses to an icon rail** with tooltips (Ctrl/Cmd + B), state remembered |
+| D66 | Welcoming | Time-of-day **greeting** on citizen home; **thank-you + "what happens next"** after sending; **help line** on every citizen page (helpline number via `NEXT_PUBLIC_HELPLINE`) |
+
 No open questions remain.

@@ -49,6 +49,12 @@ type Strings = {
   pinCorrect: string;
   pinNeeded: string;
   noSpeech: string;
+  needHelp: string;
+  greeting: (hour: number) => string;
+  greetingSub: string;
+  thankYou: string;
+  nextTitle: string;
+  nextSteps: [string, string, string];
   categories: Record<Category, string>;
   statuses: Record<Status, string>;
 };
@@ -95,6 +101,12 @@ export const STRINGS: Record<Language, Strings> = {
     pinCorrect: "സ്ഥലം ശരിയാണ്",
     pinNeeded: "അയയ്ക്കാൻ കൃത്യ സ്ഥലം വേണം",
     noSpeech: "ശബ്ദം കേട്ടില്ല. ഫോൺ അടുത്ത് പിടിച്ച് വീണ്ടും പറയൂ.",
+    needHelp: "സഹായം വേണോ? ശബ്ദത്തിൽ ചോദിക്കൂ",
+    greeting: (h) => (h < 12 ? "സുപ്രഭാതം" : "നമസ്കാരം"),
+    greetingSub: "ഇന്ന് കായലിൽ എന്താണ് പ്രശ്നം?",
+    thankYou: "നമ്മുടെ കായലിനെ കരുതുന്നതിന് നന്ദി.",
+    nextTitle: "ഇനി എന്ത് സംഭവിക്കും",
+    nextSteps: ["പഞ്ചായത്ത് ഇപ്പോൾ തന്നെ ഇത് മാപ്പിൽ കാണും", "ഒരു ടീം പരിശോധിച്ച് സ്ഥിതി പുതുക്കും", "‘എന്റെ പരാതികൾ’ ൽ എപ്പോഴും സ്ഥിതി നോക്കാം"],
     categories: { plastic: "പ്ലാസ്റ്റിക്", water_hyacinth: "പോള", oil: "എണ്ണ", flooding: "വെള്ളക്കെട്ട്", broken_jetty: "ജെട്ടി തകർച്ച", other: "മറ്റുള്ളവ" },
     statuses: { draft: "കരട്", open: "ലഭിച്ചു", in_progress: "നടപടിയിൽ", resolved: "പരിഹരിച്ചു", rejected: "നിരസിച്ചു", duplicate: "ആവർത്തനം" },
   },
@@ -139,6 +151,12 @@ export const STRINGS: Record<Language, Strings> = {
     pinCorrect: "जगह सही है",
     pinNeeded: "भेजने के लिए सही जगह चाहिए",
     noSpeech: "आवाज़ सुनाई नहीं दी। फ़ोन पास रखकर फिर से बोलें।",
+    needHelp: "मदद चाहिए? बोलकर पूछें",
+    greeting: (h) => (h < 12 ? "सुप्रभात" : "नमस्ते"),
+    greetingSub: "आज पानी में क्या समस्या है?",
+    thankYou: "हमारे जल की परवाह करने के लिए धन्यवाद।",
+    nextTitle: "आगे क्या होगा",
+    nextSteps: ["पंचायत इसे अभी नक्शे पर देख रही है", "एक टीम जाँच करके स्थिति अपडेट करेगी", "‘मेरी शिकायतें’ में कभी भी स्थिति देखें"],
     categories: { plastic: "प्लास्टिक", water_hyacinth: "जलकुंभी", oil: "तेल", flooding: "जलभराव", broken_jetty: "टूटी जेट्टी", other: "अन्य" },
     statuses: { draft: "ड्राफ़्ट", open: "मिली", in_progress: "काम जारी", resolved: "हल हुई", rejected: "अस्वीकार", duplicate: "दोहराई गई" },
   },
@@ -183,6 +201,12 @@ export const STRINGS: Record<Language, Strings> = {
     pinCorrect: "இடம் சரி",
     pinNeeded: "அனுப்ப சரியான இடம் தேவை",
     noSpeech: "குரல் கேட்கவில்லை. போனை அருகில் வைத்து மீண்டும் பேசவும்.",
+    needHelp: "உதவி வேண்டுமா? குரலில் கேளுங்கள்",
+    greeting: (h) => (h < 12 ? "காலை வணக்கம்" : "வணக்கம்"),
+    greetingSub: "இன்று நீரில் என்ன பிரச்சனை?",
+    thankYou: "நம் நீர்நிலைகளைக் காக்க உதவியதற்கு நன்றி.",
+    nextTitle: "அடுத்து என்ன நடக்கும்",
+    nextSteps: ["பஞ்சாயத்து இதை இப்போதே வரைபடத்தில் பார்க்கிறது", "ஒரு குழு சரிபார்த்து நிலையைப் புதுப்பிக்கும்", "‘என் புகார்கள்’ இல் எப்போதும் நிலையைப் பார்க்கலாம்"],
     categories: { plastic: "பிளாஸ்டிக்", water_hyacinth: "ஆகாயத் தாமரை", oil: "எண்ணெய்", flooding: "வெள்ளம்", broken_jetty: "உடைந்த துறை", other: "மற்றவை" },
     statuses: { draft: "வரைவு", open: "பெறப்பட்டது", in_progress: "நடவடிக்கையில்", resolved: "தீர்ந்தது", rejected: "நிராகரிப்பு", duplicate: "நகல்" },
   },
@@ -227,6 +251,12 @@ export const STRINGS: Record<Language, Strings> = {
     pinCorrect: "Location is correct",
     pinNeeded: "An exact location is needed to send",
     noSpeech: "We couldn't hear that. Hold the phone closer and speak again.",
+    needHelp: "Need help? Ask by voice",
+    greeting: (h) => (h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening"),
+    greetingSub: "What's wrong with the water today?",
+    thankYou: "Thank you for caring for our waters.",
+    nextTitle: "What happens next",
+    nextSteps: ["The panchayat sees it on the map right now", "A team checks it and updates the status", "Check the status any time in My complaints"],
     categories: { plastic: "Plastic", water_hyacinth: "Water hyacinth", oil: "Oil", flooding: "Flooding", broken_jetty: "Broken jetty", other: "Other" },
     statuses: { draft: "Draft", open: "Received", in_progress: "In progress", resolved: "Resolved", rejected: "Rejected", duplicate: "Duplicate" },
   },
